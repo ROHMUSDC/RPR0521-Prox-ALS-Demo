@@ -1,0 +1,5107 @@
+;; Compile Options : /TML610111 /MS /near /Icommon /Imain /Iirq /Itimer /Iclock /Itbc /Ipwm /Iuart /Ivolume /Iled /Ii2c /SS 256 /SD /Oa /Ot /W 1 /Ff /Fa_output\_obj\ 
+;; Version Number  : Ver.3.41.8
+;; File Name       : main.c
+
+	type (ML610111) 
+	fastfloat
+	model small, near
+	$$NVARmain segment data 2h #0h
+	$$NINITVAR segment data 2h #0h
+	$$NINITTAB segment table 2h any
+	$$BLINK$main segment code 2h #0h
+	$$GetColorUART_Command$main segment code 2h #0h
+	$$GetUART_Command$main segment code 2h #0h
+	$$I2C_Read$main segment code 2h #0h
+	$$I2C_Write$main segment code 2h #0h
+	$$Init_KMX61$main segment code 2h #0h
+	$$Initialization$main segment code 2h #0h
+	$$NOP1000$main segment code 2h #0h
+	$$NOPms$main segment code 2h #0h
+	$$OutputPWM$main segment code 2h #0h
+	$$PWM_SET$main segment code 2h #0h
+	$$PinB0_PWM$main segment code 2h #0h
+	$$PortA_Digital_Inputs$main segment code 2h #0h
+	$$PortA_Low$main segment code 2h #0h
+	$$PortB_Low$main segment code 2h #0h
+	$$PortC_Low$main segment code 2h #0h
+	$$SET_RGB$main segment code 2h #0h
+	$$SetOSC$main segment code 2h #0h
+	$$TABALS0_LSB$main segment table 2h #0h
+	$$TABALS0_MSB$main segment table 2h #0h
+	$$TABALS1_LSB$main segment table 2h #0h
+	$$TABALS1_MSB$main segment table 2h #0h
+	$$TABKMX61_ACCEL_XOUT_H$main segment table 2h #0h
+	$$TABKMX61_ACCEL_XOUT_L$main segment table 2h #0h
+	$$TABKMX61_ACCEL_YOUT_H$main segment table 2h #0h
+	$$TABKMX61_ACCEL_YOUT_L$main segment table 2h #0h
+	$$TABKMX61_ACCEL_ZOUT_H$main segment table 2h #0h
+	$$TABKMX61_ACCEL_ZOUT_L$main segment table 2h #0h
+	$$TABKMX61_BTH$main segment table 2h #0h
+	$$TABKMX61_BTSC$main segment table 2h #0h
+	$$TABKMX61_BUF_CLEAR$main segment table 2h #0h
+	$$TABKMX61_BUF_CTRL1$main segment table 2h #0h
+	$$TABKMX61_BUF_CTRL1_CFGDAT$main segment table 2h #0h
+	$$TABKMX61_BUF_CTRL2$main segment table 2h #0h
+	$$TABKMX61_BUF_CTRL2_CFGDAT$main segment table 2h #0h
+	$$TABKMX61_BUF_READ$main segment table 2h #0h
+	$$TABKMX61_BUF_STATUS_H$main segment table 2h #0h
+	$$TABKMX61_BUF_STATUS_L$main segment table 2h #0h
+	$$TABKMX61_BUF_STATUS_REG$main segment table 2h #0h
+	$$TABKMX61_BUF_THRESH_H$main segment table 2h #0h
+	$$TABKMX61_BUF_THRESH_L$main segment table 2h #0h
+	$$TABKMX61_CNTL1$main segment table 2h #0h
+	$$TABKMX61_CNTL1_CFGDAT$main segment table 2h #0h
+	$$TABKMX61_CNTL2$main segment table 2h #0h
+	$$TABKMX61_CNTL2_CFGDAT$main segment table 2h #0h
+	$$TABKMX61_COTR$main segment table 2h #0h
+	$$TABKMX61_I2C_ADDR$main segment table 2h #0h
+	$$TABKMX61_INC1$main segment table 2h #0h
+	$$TABKMX61_INC1_CFGDAT$main segment table 2h #0h
+	$$TABKMX61_INC2$main segment table 2h #0h
+	$$TABKMX61_INC3$main segment table 2h #0h
+	$$TABKMX61_INC3_CFGDAT$main segment table 2h #0h
+	$$TABKMX61_INL$main segment table 2h #0h
+	$$TABKMX61_INS1$main segment table 2h #0h
+	$$TABKMX61_INS2$main segment table 2h #0h
+	$$TABKMX61_MAG_XOUT_H$main segment table 2h #0h
+	$$TABKMX61_MAG_XOUT_L$main segment table 2h #0h
+	$$TABKMX61_MAG_YOUT_H$main segment table 2h #0h
+	$$TABKMX61_MAG_YOUT_L$main segment table 2h #0h
+	$$TABKMX61_MAG_ZOUT_H$main segment table 2h #0h
+	$$TABKMX61_MAG_ZOUT_L$main segment table 2h #0h
+	$$TABKMX61_ODCNTL$main segment table 2h #0h
+	$$TABKMX61_ODCNTL_CFGDAT$main segment table 2h #0h
+	$$TABKMX61_SELF_TEST$main segment table 2h #0h
+	$$TABKMX61_SELF_TEST_CFGDAT$main segment table 2h #0h
+	$$TABKMX61_SN_1$main segment table 2h #0h
+	$$TABKMX61_SN_2$main segment table 2h #0h
+	$$TABKMX61_SN_3$main segment table 2h #0h
+	$$TABKMX61_SN_4$main segment table 2h #0h
+	$$TABKMX61_STATUS_REG$main segment table 2h #0h
+	$$TABKMX61_STBY_REG$main segment table 2h #0h
+	$$TABKMX61_TEMP_EN_CNTL$main segment table 2h #0h
+	$$TABKMX61_TEMP_EN_CNTL_CFGDAT$main segment table 2h #0h
+	$$TABKMX61_TEMP_OUT_H$main segment table 2h #0h
+	$$TABKMX61_TEMP_OUT_L$main segment table 2h #0h
+	$$TABKMX61_WHO_AM_I$main segment table 2h #0h
+	$$TABKMX61_WUFC$main segment table 2h #0h
+	$$TABKMX61_WUFC_CFGDAT$main segment table 2h #0h
+	$$TABKMX61_WUFTH$main segment table 2h #0h
+	$$TABKMX61_WUFTH_CFGDAT$main segment table 2h #0h
+	$$TABKMX61_XOUT_HPF_H$main segment table 2h #0h
+	$$TABKMX61_XOUT_HPF_L$main segment table 2h #0h
+	$$TABKMX61_YOUT_HPF_H$main segment table 2h #0h
+	$$TABKMX61_YOUT_HPF_L$main segment table 2h #0h
+	$$TABKMX61_ZOUT_HPF_H$main segment table 2h #0h
+	$$TABKMX61_ZOUT_HPF_L$main segment table 2h #0h
+	$$TABManufact_ID$main segment table 2h #0h
+	$$TABProx_ModeCTR$main segment table 2h #0h
+	$$TABProx_PS_LSB$main segment table 2h #0h
+	$$TABProx_PS_MSB$main segment table 2h #0h
+	$$TAB_uartSetParam$main segment table 2h #0h
+	$$_funcI2CFin$main segment code 2h #0h
+	$$_funcUartFin$main segment code 2h #0h
+	$$_intI2c$main segment code 2h #0h
+	$$_intPB2$main segment code 2h #0h
+	$$_intUart$main segment code 2h #0h
+	$$analog_comparator$main segment code 2h #0h
+	$$blinkRGB$main segment code 2h #0h
+	$$checkI2C$main segment code 2h #0h
+	$$main$main segment code 2h #0h
+	$$main_clrWDT$main segment code 2h #0h
+	$$main_reqNotHalt$main segment code 2h #0h
+	$$sweepRGB$main segment code 2h #0h
+	$$write$main segment code 2h #0h
+	STACKSEG 0100h
+CVERSION 3.41.8
+CGLOBAL 01H 03H 0000H "NOPms" 08H 02H 0C3H 00H 81H 0aH 00H 00H 07H
+CGLOBAL 01H 03H 0000H "checkI2C" 08H 02H 0BDH 00H 81H 02H 00H 00H 07H
+CGLOBAL 01H 03H 0000H "main_clrWDT" 08H 02H 0B1H 00H 80H 00H 00H 00H 07H
+CSGLOBAL 03H 0000H "_funcUartFin" 08H 02H 0BBH 00H 81H 02H 00H 00H 07H
+CGLOBAL 01H 03H 0000H "main_reqNotHalt" 08H 02H 0BEH 00H 80H 00H 00H 00H 07H
+CGLOBAL 01H 03H 0000H "GetUART_Command" 08H 02H 0C7H 00H 81H 08H 00H 00H 07H
+CSGLOBAL 03H 0000H "Initialization" 08H 02H 0B2H 00H 81H 04H 00H 00H 07H
+CGLOBAL 01H 03H 0000H "PortA_Digital_Inputs" 08H 02H 0EAH 00H 80H 00H 00H 00H 07H
+CGLOBAL 01H 03H 0000H "BLINK" 08H 02H 0C5H 00H 81H 02H 00H 00H 07H
+CGLOBAL 01H 03H 0000H "main" 08H 02H 0CCH 00H 80H 06H 00H 00H 01H
+CSGLOBAL 03H 0000H "_intUart" 08H 02H 0BFH 00H 80H 00H 00H 00H 07H
+CGLOBAL 01H 03H 0000H "I2C_Write" 08H 02H 0B9H 00H 83H 10H 00H 00H 07H
+CGLOBAL 01H 03H 0000H "OutputPWM" 08H 02H 0C4H 00H 80H 00H 00H 00H 07H
+CGLOBAL 01H 03H 0000H "NOP1000" 08H 02H 0C2H 00H 80H 00H 00H 00H 07H
+CSGLOBAL 03H 0000H "_intI2c" 08H 02H 0C0H 00H 81H 02H 00H 00H 07H
+CGLOBAL 01H 03H 0000H "write" 08H 02H 0B7H 00H 83H 08H 00H 00H 01H
+CSGLOBAL 03H 0000H "SetOSC" 08H 02H 0B3H 00H 80H 00H 00H 00H 07H
+CGLOBAL 01H 03H 0000H "PortC_Low" 08H 02H 0B6H 00H 80H 00H 00H 00H 07H
+CGLOBAL 01H 03H 0000H "GetColorUART_Command" 08H 02H 0C9H 00H 81H 06H 00H 00H 00H
+CGLOBAL 01H 03H 0000H "blinkRGB" 08H 02H 0CBH 00H 81H 04H 00H 00H 07H
+CGLOBAL 01H 03H 0000H "sweepRGB" 08H 02H 0CAH 00H 81H 04H 00H 00H 07H
+CSGLOBAL 03H 0000H "_intPB2" 08H 02H 0C1H 00H 80H 00H 00H 00H 07H
+CGLOBAL 01H 03H 0000H "SET_RGB" 08H 02H 0C8H 00H 82H 04H 00H 00H 07H
+CGLOBAL 01H 03H 0000H "PortB_Low" 08H 02H 0B5H 00H 80H 00H 00H 00H 07H
+CGLOBAL 01H 03H 0000H "I2C_Read" 08H 02H 0B8H 00H 83H 10H 00H 00H 07H
+CGLOBAL 01H 03H 0000H "PortA_Low" 08H 02H 0B4H 00H 80H 00H 00H 00H 07H
+CGLOBAL 01H 03H 0000H "analog_comparator" 08H 02H 0E6H 00H 80H 00H 00H 00H 07H
+CSGLOBAL 03H 0000H "_funcI2CFin" 08H 02H 0BCH 00H 81H 02H 00H 00H 07H
+CGLOBAL 01H 03H 0000H "PWM_SET" 08H 02H 0C6H 00H 81H 02H 00H 00H 07H
+CGLOBAL 01H 03H 0000H "Init_KMX61" 08H 02H 0BAH 00H 81H 08H 00H 00H 07H
+CGLOBAL 01H 03H 0000H "PinB0_PWM" 08H 02H 0EBH 00H 80H 00H 00H 00H 07H
+CSTRUCTTAG 0000H 0000H 0005H 0006H 0000000AH "_Notag"
+CSTRUCTMEM 42H 00000004H 00000000H "br" 02H 00H 02H
+CSTRUCTMEM 42H 00000001H 00000004H "lg" 02H 00H 00H
+CSTRUCTMEM 42H 00000001H 00000005H "pt" 02H 00H 00H
+CSTRUCTMEM 42H 00000001H 00000006H "stp" 02H 00H 00H
+CSTRUCTMEM 42H 00000001H 00000007H "neg" 02H 00H 00H
+CSTRUCTMEM 42H 00000001H 00000008H "dir" 02H 00H 00H
+CSTRUCTTAG 0000H 0000H 0004H 0002H 00000008H "_Notag"
+CSTRUCTMEM 43H 00000004H 00000000H "quot" 02H 00H 02H
+CSTRUCTMEM 43H 00000004H 00000004H "rem" 02H 00H 02H
+CSTRUCTTAG 0000H 0000H 0003H 0002H 00000004H "_Notag"
+CSTRUCTMEM 43H 00000002H 00000000H "quot" 02H 00H 01H
+CSTRUCTMEM 43H 00000002H 00000002H "rem" 02H 00H 01H
+CSTRUCTTAG 0000H 0000H 0002H 000CH 00000016H "_Notag"
+CSTRUCTMEM 42H 00000002H 00000000H "_Mode" 02H 00H 08H
+CSTRUCTMEM 43H 00000002H 00000002H "_Handle" 02H 00H 08H
+CSTRUCTMEM 42H 00000002H 00000004H "_Buf" 04H 03H 00H 00H 00H
+CSTRUCTMEM 42H 00000002H 00000006H "_Bend" 04H 03H 00H 00H 00H
+CSTRUCTMEM 42H 00000002H 00000008H "_Next" 04H 03H 00H 00H 00H
+CSTRUCTMEM 42H 00000002H 0000000AH "_Rend" 04H 03H 00H 00H 00H
+CSTRUCTMEM 42H 00000002H 0000000CH "_Rsave" 04H 03H 00H 00H 00H
+CSTRUCTMEM 42H 00000002H 0000000EH "_Wend" 04H 03H 00H 00H 00H
+CSTRUCTMEM 42H 00000002H 00000010H "_Back" 05H 01H 02H 00H 00H 00H
+CSTRUCTMEM 42H 00000001H 00000012H "_Cbuf" 02H 00H 00H
+CSTRUCTMEM 42H 00000001H 00000013H "_Nback" 02H 00H 00H
+CSTRUCTMEM 43H 00000002H 00000014H "_Tmpnam" 04H 03H 00H 00H 00H
+CSTRUCTTAG 0000H 0000H 0001H 0001H 00000004H "_Notag"
+CSTRUCTMEM 42H 00000004H 00000000H "_Off" 02H 00H 02H
+CSTRUCTTAG 0000H 0000H 0000H 0008H 00000001H "_Notag"
+CSTRUCTMEM 52H 00000001H 00000000H "b0" 02H 00H 00H
+CSTRUCTMEM 52H 00000001H 00000001H "b1" 02H 00H 00H
+CSTRUCTMEM 52H 00000001H 00000002H "b2" 02H 00H 00H
+CSTRUCTMEM 52H 00000001H 00000003H "b3" 02H 00H 00H
+CSTRUCTMEM 52H 00000001H 00000004H "b4" 02H 00H 00H
+CSTRUCTMEM 52H 00000001H 00000005H "b5" 02H 00H 00H
+CSTRUCTMEM 52H 00000001H 00000006H "b6" 02H 00H 00H
+CSTRUCTMEM 52H 00000001H 00000007H "b7" 02H 00H 00H
+CUNIONTAG 0000H 0000H 0006H 0006H 00000006H "_Notag"
+CUNIONMEM 42H 00000001H "_uchar" 02H 00H 00H
+CUNIONMEM 42H 00000006H "_ucharArr" 05H 01H 06H 00H 00H 00H
+CUNIONMEM 42H 00000002H "_uint" 02H 00H 01H
+CUNIONMEM 42H 00000006H "_uintArr" 05H 01H 03H 00H 00H 01H
+CUNIONMEM 43H 00000006H "_intArr" 05H 01H 03H 00H 00H 01H
+CUNIONMEM 43H 00000004H "_float" 02H 00H 03H
+CTYPEDEF 0000H 0000H 43H "_Ptrdifft" 02H 00H 01H
+CTYPEDEF 0000H 0000H 42H "_Sizet" 02H 00H 01H
+CTYPEDEF 0000H 0000H 43H "tUartSetParam" 04H 00H 05H 05H 00H
+CTYPEDEF 0000H 0000H 42H "size_t" 02H 00H 01H
+CTYPEDEF 0000H 0000H 43H "cbfUart" 0AH 03H 00H 02H 5EH 00H 00H 00H 00H 00H 07H
+CTYPEDEF 0000H 0000H 43H "fpos_t" 04H 00H 05H 01H 00H
+CTYPEDEF 0000H 0000H 43H "cbfI2c" 0AH 03H 00H 02H 73H 00H 00H 00H 00H 00H 07H
+CTYPEDEF 0000H 0000H 03H "_Cmpfun_nf" 08H 02H 31H 00H 00H 00H 00H 00H 01H
+CTYPEDEF 0000H 0000H 03H "_Cmpfun_nn" 08H 02H 30H 00H 00H 00H 00H 00H 01H
+CTYPEDEF 0000H 0000H 03H "_Cmpfun_ff" 08H 02H 33H 00H 00H 00H 00H 00H 01H
+CTYPEDEF 0000H 0000H 03H "_Cmpfun_fn" 08H 02H 32H 00H 00H 00H 00H 00H 01H
+CTYPEDEF 0000H 0000H 43H "FILE" 04H 00H 05H 02H 00H
+CTYPEDEF 0000H 0000H 43H "div_t" 04H 00H 05H 03H 00H
+CTYPEDEF 0000H 0000H 43H "ldiv_t" 04H 00H 05H 04H 00H
+CTYPEDEF 0000H 0000H 43H "_BYTE_FIELD" 04H 00H 05H 00H 00H
+CSGLOBAL 42H 0001H "KnotsUnit" 02H 00H 00H
+CSGLOBAL 42H 0002H "bulbMode" 02H 00H 01H
+CGLOBAL 00H 42H 0001H "_flgUartFin" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_WUFC" 02H 00H 00H
+CSGLOBAL 42H 0002H "i" 02H 00H 01H
+CSGLOBAL 42H 0002H "j" 02H 00H 01H
+CSGLOBAL 42H 0002H "k" 02H 00H 01H
+CSGLOBAL 42H 0002H "w" 02H 00H 01H
+CSGLOBAL 42H 0002H "x" 02H 00H 01H
+CSGLOBAL 42H 0001H "bulbState" 02H 00H 00H
+CSGLOBAL 42H 0002H "y" 02H 00H 01H
+CSGLOBAL 42H 0002H "z" 02H 00H 01H
+CSGLOBAL 43H 0008H "KnotsSpeed" 02H 00H 09H
+CSGLOBAL 43H 0008H "Latitude" 02H 00H 09H
+CSGLOBAL 43H 0008H "HomeTolerance" 02H 00H 09H
+CGLOBAL 00H 43H 0004H "SensorReturn" 02H 00H 03H
+CSGLOBAL 42H 0002H "Eleveation" 02H 00H 01H
+CGLOBAL 01H 00H 0001H "KMX61_INC3_CFGDAT" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_TEMP_EN_CNTL_CFGDAT" 02H 00H 00H
+CSGLOBAL 42H 0002H "hexToDecOffset" 02H 00H 01H
+CSGLOBAL 42H 0001H "ReceiverState" 02H 00H 00H
+CSGLOBAL 42H 0001H "LonDir" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_INC1_CFGDAT" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_CNTL1_CFGDAT" 02H 00H 00H
+CSGLOBAL 42H 0002H "CheckPointIndex" 02H 00H 01H
+CGLOBAL 01H 00H 0001H "KMX61_CNTL2_CFGDAT" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_WUFC_CFGDAT" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "Manufact_ID" 02H 00H 00H
+CSGLOBAL 43H 0008H "Geoid" 02H 00H 09H
+CSGLOBAL 42H 0004H "Date" 05H 01H 02H 00H 00H 01H
+CSGLOBAL 42H 0320H "val" 05H 01H 20H 03H 00H 00H
+CGLOBAL 00H 43H 0006H "uniRawSensorOut" 04H 00H 06H 06H 00H
+CGLOBAL 01H 42H 0001H "DoorOpen" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "ALS0_LSB" 02H 00H 00H
+CSGLOBAL 42H 0008H "str" 05H 01H 08H 00H 00H 00H
+CGLOBAL 01H 00H 0001H "ALS0_MSB" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_BTSC" 02H 00H 00H
+CSGLOBAL 43H 0028H "LatDest" 05H 01H 05H 00H 00H 09H
+CSGLOBAL 42H 0003H "commandVal" 05H 01H 03H 00H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_ODCNTL" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_COTR" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_STATUS_REG" 02H 00H 00H
+CSGLOBAL 43H 0008H "Course" 02H 00H 09H
+CSGLOBAL 42H 0018H "GSV_Info" 05H 01H 0CH 00H 00H 01H
+CSGLOBAL 43H 0008H "PDOP" 02H 00H 09H
+CSGLOBAL 42H 0001H "isTrueNorth" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_WUFTH" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_STBY_REG" 02H 00H 00H
+CSGLOBAL 42H 0002H "flag" 02H 00H 01H
+CSGLOBAL 43H 0004H "outputVal" 02H 00H 02H
+CGLOBAL 01H 00H 0001H "KMX61_INC1" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_INC2" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_INC3" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_ACCEL_YOUT_H" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_ACCEL_YOUT_L" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_INS1" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_INS2" 02H 00H 00H
+CSGLOBAL 42H 0001H "LEDFlashFlag" 02H 00H 00H
+CSGLOBAL 42H 0002H "bulbIntensity" 02H 00H 01H
+CGLOBAL 01H 00H 0001H "KMX61_MAG_YOUT_H" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_MAG_YOUT_L" 02H 00H 00H
+CSGLOBAL 42H 0002H "fixQuality" 02H 00H 01H
+CGLOBAL 01H 00H 0001H "KMX61_WUFTH_CFGDAT" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_BUF_THRESH_H" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_BUF_THRESH_L" 02H 00H 00H
+CSGLOBAL 42H 0002H "checkSum" 02H 00H 01H
+CSGLOBAL 43H 0008H "VDOP" 02H 00H 09H
+CGLOBAL 01H 00H 0001H "KMX61_BUF_CLEAR" 02H 00H 00H
+CSGLOBAL 43H 0028H "LonDest" 05H 01H 05H 00H 00H 09H
+CSGLOBAL 43H 0008H "prevBulbIntensity" 02H 00H 09H
+CSGLOBAL 01H 000AH "_uartSetParam" 04H 00H 05H 05H 00H
+CSGLOBAL 43H 0004H "R_Value" 02H 00H 02H
+CSGLOBAL 43H 0004H "B_Value" 02H 00H 02H
+CSGLOBAL 43H 0008H "GroundSpeed" 02H 00H 09H
+CSGLOBAL 43H 0004H "G_Value" 02H 00H 02H
+CSGLOBAL 42H 0002H "bulbEnable" 02H 00H 01H
+CGLOBAL 01H 00H 0001H "KMX61_ODCNTL_CFGDAT" 02H 00H 00H
+CSGLOBAL 42H 0001H "SensorPlatformSelection" 02H 00H 00H
+CSGLOBAL 42H 0001H "LatLonValid" 02H 00H 00H
+CSGLOBAL 42H 0002H "Mode" 05H 01H 02H 00H 00H 00H
+CGLOBAL 01H 00H 0001H "Prox_ModeCTR" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_BTH" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_TEMP_EN_CNTL" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_CNTL1" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_CNTL2" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_XOUT_HPF_L" 02H 00H 00H
+CSGLOBAL 42H 0001H "LEDChangeFlag" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_XOUT_HPF_H" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "ALS1_LSB" 02H 00H 00H
+CSGLOBAL 42H 0002H "sigDigits" 02H 00H 01H
+CSGLOBAL 42H 0001H "LatDir" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "ALS1_MSB" 02H 00H 00H
+CGLOBAL 01H 42H 0002H "TimeFlag" 02H 00H 01H
+CSGLOBAL 42H 0002H "isSettingMode" 02H 00H 01H
+CSGLOBAL 42H 0002H "isNeg" 02H 00H 01H
+CGLOBAL 01H 00H 0001H "KMX61_INL" 02H 00H 00H
+CSGLOBAL 43H 0008H "MagDegrees" 02H 00H 09H
+CGLOBAL 01H 00H 0001H "KMX61_ZOUT_HPF_L" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_ZOUT_HPF_H" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_YOUT_HPF_L" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_YOUT_HPF_H" 02H 00H 00H
+CSGLOBAL 42H 0001H "MagDir" 02H 00H 00H
+CSGLOBAL 42H 0002H "wordIndex" 02H 00H 01H
+CGLOBAL 01H 00H 0001H "KMX61_SN_1" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_SN_2" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_SN_3" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_SN_4" 02H 00H 00H
+CGLOBAL 00H 42H 0001H "_flgPB2Int" 02H 00H 00H
+CSGLOBAL 42H 0001H "temp" 02H 00H 00H
+CGLOBAL 00H 42H 0001H "_flgI2CFin" 02H 00H 00H
+CSGLOBAL 42H 0001H "speedUnit" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_SELF_TEST_CFGDAT" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "Prox_PS_LSB" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "Prox_PS_MSB" 02H 00H 00H
+CSGLOBAL 42H 0002H "Azimuth" 02H 00H 01H
+CGLOBAL 01H 00H 0001H "KMX61_I2C_ADDR" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_BUF_READ" 02H 00H 00H
+CSGLOBAL 43H 0008H "TrueDegrees" 02H 00H 09H
+CGLOBAL 01H 00H 0001H "KMX61_TEMP_OUT_H" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_TEMP_OUT_L" 02H 00H 00H
+CGLOBAL 00H 42H 0001H "RegVal" 02H 00H 00H
+CGLOBAL 00H 42H 0001H "_reqNotHalt" 02H 00H 00H
+CSGLOBAL 43H 0008H "Longitude" 02H 00H 09H
+CSGLOBAL 43H 0008H "MSL" 02H 00H 09H
+CGLOBAL 01H 00H 0001H "KMX61_ACCEL_XOUT_H" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_ACCEL_ZOUT_H" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_ACCEL_XOUT_L" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_ACCEL_ZOUT_L" 02H 00H 00H
+CSGLOBAL 43H 0008H "MagneticVariation" 02H 00H 09H
+CGLOBAL 01H 00H 0001H "KMX61_BUF_CTRL2_CFGDAT" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_BUF_CTRL1_CFGDAT" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_BUF_CTRL1" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_BUF_CTRL2" 02H 00H 00H
+CSGLOBAL 42H 0002H "SNR" 02H 00H 01H
+CSGLOBAL 42H 0014H "buffer" 05H 01H 14H 00H 00H 00H
+CSGLOBAL 42H 0001H "KMHSpeed" 02H 00H 00H
+CSGLOBAL 42H 0002H "GSV_index" 02H 00H 01H
+CSGLOBAL 42H 0064H "word" 05H 01H 64H 00H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_BUF_STATUS_L" 02H 00H 00H
+CSGLOBAL 42H 0006H "UTC" 05H 01H 03H 00H 00H 01H
+CGLOBAL 01H 00H 0001H "KMX61_BUF_STATUS_H" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_MAG_XOUT_H" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_MAG_ZOUT_H" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_MAG_XOUT_L" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_MAG_ZOUT_L" 02H 00H 00H
+CGLOBAL 01H 00H 0001H "KMX61_SELF_TEST" 02H 00H 00H
+CSGLOBAL 42H 0002H "PRN_num" 02H 00H 01H
+CSGLOBAL 42H 0001H "SensorIntializationFlag" 02H 00H 00H
+CGLOBAL 00H 42H 0002H "timer" 02H 00H 01H
+CSGLOBAL 42H 0002H "numSat" 02H 00H 01H
+CGLOBAL 01H 00H 0001H "KMX61_WHO_AM_I" 02H 00H 00H
+CSGLOBAL 42H 0002H "GSV_numMessage" 02H 00H 01H
+CGLOBAL 01H 00H 0001H "KMX61_BUF_STATUS_REG" 02H 00H 00H
+CSGLOBAL 43H 0008H "HDOP" 02H 00H 09H
+CSGLOBAL 42H 0018H "SV_ID" 05H 01H 0CH 00H 00H 01H
+CSGLOBAL 42H 0001H "isMagNorth" 02H 00H 00H
+CFILE 0001H 000007EEH "main\\ML610111.H"
+CFILE 0002H 000000EEH "main\\stdio.h"
+CFILE 0003H 0000007AH "main\\yvals.h"
+CFILE 0004H 000000D8H "main\\stdlib.h"
+CFILE 0005H 0000006FH "uart\\uart.h"
+CFILE 0006H 00000027H "common\\common.h"
+CFILE 0007H 00000028H "main\\mcu.h"
+CFILE 0008H 00000057H "irq\\irq.h"
+CFILE 0009H 00000045H "i2c\\i2c.h"
+CFILE 000AH 000001B6H "timer\\timer.h"
+CFILE 0000H 00000639H "main\\main.c"
+
+	rseg $$main$main
+CFUNCTION 204
+
+_main	:
+CBLOCK 204 1 283
+
+;;{ 	 
+CLINEA 0000H 0001H 011BH 0001H 0004H
+CBLOCK 204 2 283
+
+;;	Initialization(); //Ports, UART, Timers, Oscillator, Comparators, etc.
+CLINEA 0000H 0001H 011CH 0002H 0047H
+	bl	_Initialization
+
+;;	main_clrWDT(); 
+CLINEA 0000H 0001H 011EH 0002H 0010H
+	bl	_main_clrWDT
+
+;;	BLINK(); 
+CLINEA 0000H 0001H 011FH 0002H 000AH
+	bl	_BLINK
+
+;;	OutputPWM(); 
+CLINEA 0000H 0001H 0120H 0002H 000EH
+	bl	_OutputPWM
+
+;;	temp = 0xC6u; //1100_0110
+CLINEA 0000H 0001H 0122H 0002H 001AH
+	mov	r0,	#0c6h
+	st	r0,	NEAR _temp
+
+;;	I2C_Write(0x38u, &Prox_ModeCTR, 1, &temp, 1); 
+CLINEA 0000H 0001H 0123H 0002H 002FH
+	mov	r0,	#01h
+	push	r0
+	mov	r0,	#BYTE1 OFFSET _temp
+	mov	r1,	#BYTE2 OFFSET _temp
+	push	er0
+	mov	r0,	#01h
+	push	r0
+	mov	r2,	#BYTE1 OFFSET _Prox_ModeCTR
+	mov	r3,	#BYTE2 OFFSET _Prox_ModeCTR
+	mov	r0,	#038h
+	bl	_I2C_Write
+	add	sp,	#6 
+
+;;	main_clrWDT(); 
+CLINEA 0000H 0001H 0124H 0002H 0010H
+	bl	_main_clrWDT
+
+;;	I2C_Read(0x38u, &Manufact_ID, 1, uniRawSensorOut._ucharArr, 1); 
+CLINEA 0000H 0001H 0125H 0002H 0041H
+	mov	r0,	#01h
+	push	r0
+	mov	r0,	#BYTE1 OFFSET _uniRawSensorOut
+	mov	r1,	#BYTE2 OFFSET _uniRawSensorOut
+	push	er0
+	mov	r0,	#01h
+	push	r0
+	mov	r2,	#BYTE1 OFFSET _Manufact_ID
+	mov	r3,	#BYTE2 OFFSET _Manufact_ID
+	mov	r0,	#038h
+	bl	_I2C_Read
+	add	sp,	#6 
+
+;;	main_clrWDT(); 
+CLINEA 0000H 0001H 0126H 0002H 0010H
+	bl	_main_clrWDT
+
+;;	I2C_Read(0x38u, &Prox_ModeCTR, 1, uniRawSensorOut._ucharArr, 1);
+CLINEA 0000H 0001H 0127H 0002H 0041H
+	mov	r0,	#01h
+	push	r0
+	mov	r0,	#BYTE1 OFFSET _uniRawSensorOut
+	mov	r1,	#BYTE2 OFFSET _uniRawSensorOut
+	push	er0
+	mov	r0,	#01h
+	push	r0
+	mov	r2,	#BYTE1 OFFSET _Prox_ModeCTR
+	mov	r3,	#BYTE2 OFFSET _Prox_ModeCTR
+	mov	r0,	#038h
+	bl	_I2C_Read
+	add	sp,	#6 
+
+;;	sweepRGB();
+CLINEA 0000H 0001H 012AH 0002H 000CH
+	bl	_sweepRGB
+
+;;	SET_RGB(0,0,0);
+CLINEA 0000H 0001H 012CH 0002H 0010H
+	mov	er0,	#0 
+	push	er0
+	mov	er2,	#0 
+	bl	_SET_RGB
+	add	sp,	#2 
+
+;;	i=j=k=x=y=z=bulbMode =0;
+CLINEA 0000H 0001H 012DH 0002H 0019H
+	mov	er0,	#0 
+	st	er0,	NEAR _bulbMode
+	st	er0,	NEAR _z
+	st	er0,	NEAR _y
+	st	er0,	NEAR _k
+	st	er0,	NEAR _j
+
+;;	i=x=255;
+CLINEA 0000H 0001H 012EH 0002H 0009H
+	mov	r0,	#0ffh
+	st	er0,	NEAR _x
+	st	er0,	NEAR _i
+
+;;	outputVal = bulbIntensity = w= 255; 
+CLINEA 0000H 0001H 012FH 0002H 0025H
+	st	er0,	NEAR _w
+	st	er0,	NEAR _bulbIntensity
+	mov	er2,	#0 
+	st	er0,	NEAR _outputVal
+	st	er2,	NEAR _outputVal+02h
+
+;;	PWM_SET();
+CLINEA 0000H 0001H 0130H 0002H 000BH
+	bl	_PWM_SET
+
+;;	while(1){    
+CLINEA 0000H 0001H 0131H 0002H 000EH
+	b	_$L29
+_$L31 :
+CBLOCK 204 3 305
+
+;;		main_clrWDT(); 
+CLINEA 0000H 0001H 0132H 0003H 0011H
+	bl	_main_clrWDT
+
+;;		I2C_Read(0x38u, &Prox_PS_LSB, 1, uniRawSensorOut._ucharArr, 1);
+CLINEA 0000H 0001H 0133H 0003H 0041H
+	mov	r0,	#01h
+	push	r0
+	mov	r0,	#BYTE1 OFFSET _uniRawSensorOut
+	mov	r1,	#BYTE2 OFFSET _uniRawSensorOut
+	push	er0
+	mov	r0,	#01h
+	push	r0
+	mov	r2,	#BYTE1 OFFSET _Prox_PS_LSB
+	mov	r3,	#BYTE2 OFFSET _Prox_PS_LSB
+	mov	r0,	#038h
+	bl	_I2C_Read
+	add	sp,	#6 
+
+;;		main_clrWDT();  
+CLINEA 0000H 0001H 0134H 0003H 0012H
+	bl	_main_clrWDT
+
+;;		GetUART_Command(); 
+CLINEA 0000H 0001H 0135H 0003H 0015H
+	bl	_GetUART_Command
+
+;;		if(commandVal[0] != 0)
+CLINEA 0000H 0001H 0136H 0003H 0018H
+	l	r0,	NEAR _commandVal
+	beq	_$L33
+
+;;			temp = commandVal[0]; 
+CLINEA 0000H 0001H 0137H 0004H 0019H
+	st	r0,	NEAR _temp
+_$L33 :
+
+;;		if( (temp == 'a') || (temp == 'b') ){
+CLINEA 0000H 0001H 0139H 0003H 0027H
+	l	r0,	NEAR _temp
+	cmp	r0,	#061h
+	beq	_$L36
+	cmp	r0,	#062h
+	bne	_$L35
+_$L36 :
+CBLOCK 204 4 313
+
+;;			if(bulbState == 1){
+CLINEA 0000H 0001H 013AH 0004H 0016H
+	l	r0,	NEAR _bulbState
+	cmp	r0,	#01h
+	bne	_$L42
+CBLOCK 204 5 314
+
+;;				outputVal = 0; // off
+CLINEA 0000H 0001H 013BH 0005H 0019H
+	mov	er0,	#0 
+	st	er0,	NEAR _outputVal
+	st	er0,	NEAR _outputVal+02h
+
+;;				PWM_SET(); 
+CLINEA 0000H 0001H 013CH 0005H 000FH
+	bl	_PWM_SET
+
+;;				SET_RGB(0,0,0); // off
+CLINEA 0000H 0001H 013DH 0005H 001AH
+	mov	er0,	#0 
+	push	er0
+	mov	er2,	#0 
+	bl	_SET_RGB
+	add	sp,	#2 
+
+;;			else if(bulbState == 2){
+CLINEA 0000H 0001H 013FH 0004H 001BH
+	bal	_$L47
+_$L42 :
+	cmp	r0,	#02h
+	bne	_$L45
+CBLOCK 204 6 319
+
+;;				outputVal = bulbIntensity;
+CLINEA 0000H 0001H 0140H 0005H 001EH
+	l	er0,	NEAR _bulbIntensity
+	mov	er2,	#0 
+	st	er0,	NEAR _outputVal
+	st	er2,	NEAR _outputVal+02h
+
+;;				PWM_SET(); 
+CLINEA 0000H 0001H 0141H 0005H 000FH
+	bl	_PWM_SET
+
+;;				SET_RGB(0,0,0);
+CLINEA 0000H 0001H 0142H 0005H 0013H
+	mov	er0,	#0 
+	push	er0
+	mov	er2,	#0 
+	bl	_SET_RGB
+	add	sp,	#2 
+CBLOCKEND 204 6 323
+
+;;			else{
+CLINEA 0000H 0001H 0144H 0004H 0008H
+	bal	_$L47
+_$L45 :
+CBLOCK 204 7 324
+
+;;				outputVal = 0;
+CLINEA 0000H 0001H 0145H 0005H 0012H
+	mov	er0,	#0 
+	st	er0,	NEAR _outputVal
+	st	er0,	NEAR _outputVal+02h
+
+;;				PWM_SET(); 
+CLINEA 0000H 0001H 0146H 0005H 000FH
+	bl	_PWM_SET
+
+;;				SET_RGB(i,j,k);
+CLINEA 0000H 0001H 0147H 0005H 0013H
+	l	er0,	NEAR _k
+	push	er0
+	l	er2,	NEAR _j
+	l	er0,	NEAR _i
+	bl	_SET_RGB
+	add	sp,	#2 
+
+;;				bulbState = 0;
+CLINEA 0000H 0001H 0149H 0005H 0012H
+	mov	r0,	#00h
+	st	r0,	NEAR _bulbState
+CBLOCKEND 204 7 330
+
+;;			}
+CLINEA 0000H 0000H 014AH 0004H 0004H
+_$L47 :
+
+;;			bulbState++;
+CLINEA 0000H 0000H 014BH 0004H 000FH
+	lea	OFFSET _bulbState
+	inc	[ea]
+
+;;		else if(temp == 'c'){ 
+CLINEA 0000H 0001H 014DH 0003H 0018H
+	b	_$L88
+_$L35 :
+	cmp	r0,	#063h
+	beq	_$M1
+	b	_$L88
+_$M1 :
+CBLOCK 204 8 333
+
+;;			x = i;
+CLINEA 0000H 0001H 014EH 0004H 0009H
+	l	er0,	NEAR _i
+	st	er0,	NEAR _x
+
+;;			y = j;
+CLINEA 0000H 0001H 014FH 0004H 0009H
+	l	er0,	NEAR _j
+	st	er0,	NEAR _y
+
+;;			z = k;
+CLINEA 0000H 0001H 0150H 0004H 0009H
+	l	er0,	NEAR _k
+	st	er0,	NEAR _z
+
+;;			w = bulbIntensity;
+CLINEA 0000H 0001H 0151H 0004H 0015H
+	l	er0,	NEAR _bulbIntensity
+	st	er0,	NEAR _w
+
+;;			bulbIntensity =0;
+CLINEA 0000H 0001H 0152H 0004H 0014H
+	mov	er0,	#0 
+	st	er0,	NEAR _bulbIntensity
+
+;;			i = j = k = bulbMode =0; 
+CLINEA 0000H 0001H 0153H 0004H 001CH
+	st	er0,	NEAR _bulbMode
+	st	er0,	NEAR _k
+	st	er0,	NEAR _j
+	st	er0,	NEAR _i
+
+;;			main_clrWDT();  
+CLINEA 0000H 0001H 0154H 0004H 0013H
+	bl	_main_clrWDT
+
+;;			NOPms(100);
+CLINEA 0000H 0001H 0155H 0004H 000EH
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;			_flgUartFin = 0;
+CLINEA 0000H 0001H 0157H 0004H 0013H
+	mov	r0,	#00h
+	st	r0,	NEAR __flgUartFin
+
+;;			uart_stop();
+CLINEA 0000H 0001H 0158H 0004H 000FH
+	bl	_uart_stop
+
+;;			uart_startReceive(commandVal, 3, _funcUartFin);  
+CLINEA 0000H 0001H 0159H 0004H 0034H
+	mov	r0,	#BYTE1 OFFSET __funcUartFin
+	mov	r1,	#BYTE2 OFFSET __funcUartFin
+	push	er0
+	mov	er2,	#3 
+	mov	r0,	#BYTE1 OFFSET _commandVal
+	mov	r1,	#BYTE2 OFFSET _commandVal
+	bl	_uart_startReceive
+	add	sp,	#2 
+
+;;					break;
+CLINEA 0000H 0000H 01B5H 0006H 000BH
+_$L84 :
+
+;;			while(_flgUartFin != 1){ 
+CLINEA 0000H 0000H 015BH 0000H 0000H
+	l	r0,	NEAR __flgUartFin
+	cmp	r0,	#01h
+	beq	_$M2
+	b	_$L53
+_$M2 :
+
+;;			}  	
+CLINEA 0000H 0000H 01B6H 0004H 0007H
+_$L52 :
+
+;;			if(bulbMode > 10){
+CLINEA 0000H 0001H 01B7H 0004H 0015H
+	l	er0,	NEAR _bulbMode
+	cmp	r0,	#0ah
+	cmpc	r1,	#00h
+	ble	_$L86
+CBLOCK 204 18 439
+
+;;					i=x;
+CLINEA 0000H 0001H 01B8H 0006H 0009H
+	l	er0,	NEAR _x
+	st	er0,	NEAR _i
+
+;;					j=y;
+CLINEA 0000H 0001H 01B9H 0006H 0009H
+	l	er0,	NEAR _y
+	st	er0,	NEAR _j
+
+;;					k=z;
+CLINEA 0000H 0001H 01BAH 0006H 0009H
+	l	er0,	NEAR _z
+	st	er0,	NEAR _k
+CBLOCKEND 204 18 443
+
+;;			else{
+CLINEA 0000H 0001H 01BCH 0004H 0008H
+	bal	_$L88
+_$L86 :
+CBLOCK 204 19 444
+
+;;				bulbIntensity = w;
+CLINEA 0000H 0001H 01BDH 0005H 0016H
+	l	er0,	NEAR _w
+	st	er0,	NEAR _bulbIntensity
+CBLOCKEND 204 19 446
+
+;;			}
+CLINEA 0000H 0000H 01BEH 0004H 0004H
+_$L88 :
+CBLOCKEND 204 8 447
+
+;;		I2C_Read(0x38u, &Prox_PS_MSB, 1, uniRawSensorOut._ucharArr, 1);
+CLINEA 0000H 0001H 01C1H 0003H 0041H
+	mov	r0,	#01h
+	push	r0
+	mov	r0,	#BYTE1 OFFSET _uniRawSensorOut
+	mov	r1,	#BYTE2 OFFSET _uniRawSensorOut
+	push	er0
+	mov	r0,	#01h
+	push	r0
+	mov	r2,	#BYTE1 OFFSET _Prox_PS_MSB
+	mov	r3,	#BYTE2 OFFSET _Prox_PS_MSB
+	mov	r0,	#038h
+	bl	_I2C_Read
+	add	sp,	#6 
+CBLOCKEND 204 4 536
+CBLOCKEND 204 5 536
+
+;;		main_clrWDT(); 
+CLINEA 0000H 0001H 01C2H 0003H 0011H
+	bl	_main_clrWDT
+
+;;		I2C_Read(0x38u, &ALS0_LSB, 1, uniRawSensorOut._ucharArr, 1);
+CLINEA 0000H 0001H 01C3H 0003H 003EH
+	mov	r0,	#01h
+	push	r0
+	mov	r0,	#BYTE1 OFFSET _uniRawSensorOut
+	mov	r1,	#BYTE2 OFFSET _uniRawSensorOut
+	push	er0
+	mov	r0,	#01h
+	push	r0
+	mov	r2,	#BYTE1 OFFSET _ALS0_LSB
+	mov	r3,	#BYTE2 OFFSET _ALS0_LSB
+	mov	r0,	#038h
+	bl	_I2C_Read
+	add	sp,	#6 
+
+;;		main_clrWDT(); 
+CLINEA 0000H 0001H 01C4H 0003H 0011H
+	bl	_main_clrWDT
+
+;;		I2C_Read(0x38u, &ALS0_MSB, 1, uniRawSensorOut._ucharArr, 1);
+CLINEA 0000H 0001H 01C5H 0003H 003EH
+	mov	r0,	#01h
+	push	r0
+	mov	r0,	#BYTE1 OFFSET _uniRawSensorOut
+	mov	r1,	#BYTE2 OFFSET _uniRawSensorOut
+	push	er0
+	mov	r0,	#01h
+	push	r0
+	mov	r2,	#BYTE1 OFFSET _ALS0_MSB
+	mov	r3,	#BYTE2 OFFSET _ALS0_MSB
+	mov	r0,	#038h
+	bl	_I2C_Read
+	add	sp,	#6 
+
+;;		main_clrWDT(); 
+CLINEA 0000H 0001H 01C6H 0003H 0011H
+	bl	_main_clrWDT
+
+;;		I2C_Read(0x38u, &ALS1_LSB, 1, uniRawSensorOut._ucharArr, 1);
+CLINEA 0000H 0001H 01C7H 0003H 003EH
+	mov	r0,	#01h
+	push	r0
+	mov	r0,	#BYTE1 OFFSET _uniRawSensorOut
+	mov	r1,	#BYTE2 OFFSET _uniRawSensorOut
+	push	er0
+	mov	r0,	#01h
+	push	r0
+	mov	r2,	#BYTE1 OFFSET _ALS1_LSB
+	mov	r3,	#BYTE2 OFFSET _ALS1_LSB
+	mov	r0,	#038h
+	bl	_I2C_Read
+	add	sp,	#6 
+
+;;		main_clrWDT(); 
+CLINEA 0000H 0001H 01C8H 0003H 0011H
+	bl	_main_clrWDT
+
+;;		I2C_Read(0x38u, &ALS1_MSB, 1, uniRawSensorOut._ucharArr, 1);
+CLINEA 0000H 0001H 01C9H 0003H 003EH
+	mov	r0,	#01h
+	push	r0
+	mov	r0,	#BYTE1 OFFSET _uniRawSensorOut
+	mov	r1,	#BYTE2 OFFSET _uniRawSensorOut
+	push	er0
+	mov	r0,	#01h
+	push	r0
+	mov	r2,	#BYTE1 OFFSET _ALS1_MSB
+	mov	r3,	#BYTE2 OFFSET _ALS1_MSB
+	mov	r0,	#038h
+	bl	_I2C_Read
+	add	sp,	#6 
+CBLOCKEND 204 3 458
+
+;;	} 
+CLINEA 0000H 0000H 01CAH 0002H 0003H
+_$L29 :
+
+;;	while(1){    
+CLINEA 0000H 0000H 0131H 0000H 0000H
+	b	_$L31
+
+;;		I2C_Read(0x38u, &ALS1_MSB, 1, uniRawSensorOut._ucharArr, 1);
+CBLOCKEND 204 20 533
+
+;;	while(1){    
+CBLOCKEND 204 2 536
+
+;;			while(_flgUartFin != 1){ 
+CLINEA 0000H 0000H 015BH 0004H 001CH
+_$L53 :
+
+;;				main_clrWDT();
+CLINEA 0000H 0001H 015CH 0005H 0012H
+	bl	_main_clrWDT
+
+;;					if(i==255 || j==255 || k==255){
+CLINEA 0000H 0001H 015EH 0006H 0024H
+	l	er0,	NEAR _i
+	cmp	r0,	#0ffh
+	cmpc	r1,	#00h
+	beq	_$L56
+	l	er0,	NEAR _j
+	cmp	r0,	#0ffh
+	cmpc	r1,	#00h
+	beq	_$L56
+	l	er0,	NEAR _k
+	cmp	r0,	#0ffh
+	cmpc	r1,	#00h
+	beq	_$M3
+	b	_$L55
+_$M3 :
+_$L56 :
+CBLOCK 204 10 350
+
+;;						main_clrWDT();   
+CLINEA 0000H 0001H 015FH 0007H 0017H
+	bl	_main_clrWDT
+
+;;						bulbMode++; 
+CLINEA 0000H 0000H 0160H 0007H 0012H
+	l	er0,	NEAR _bulbMode
+	add	er0,	#1 
+	st	er0,	NEAR _bulbMode
+
+;;						if(k==255){
+CLINEA 0000H 0001H 0161H 0007H 0011H
+	l	er0,	NEAR _k
+	cmp	r0,	#0ffh
+	cmpc	r1,	#00h
+	bne	_$L65
+CBLOCK 204 11 353
+
+;;							bulbMode+=7;
+CLINEA 0000H 0001H 0162H 0008H 0013H
+	l	er0,	NEAR _bulbMode
+	add	er0,	#7 
+	st	er0,	NEAR _bulbMode
+CBLOCKEND 204 11 355
+
+;;						}
+CLINEA 0000H 0000H 0163H 0007H 0007H
+_$L65 :
+
+;;						NOPms(100);
+CLINEA 0000H 0001H 0164H 0007H 0011H
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;							outputVal = 255;
+CLINEA 0000H 0001H 0166H 0008H 0017H
+	mov	r0,	#0ffh
+	mov	r1,	#00h
+	mov	er2,	#0 
+	st	er0,	NEAR _outputVal
+	st	er2,	NEAR _outputVal+02h
+
+;;							PWM_SET(); 
+CLINEA 0000H 0001H 0167H 0008H 0012H
+	bl	_PWM_SET
+
+;;							NOPms(100); 
+CLINEA 0000H 0001H 0169H 0008H 0013H
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;							outputVal = 0;
+CLINEA 0000H 0001H 016BH 0008H 0015H
+	mov	er0,	#0 
+	st	er0,	NEAR _outputVal
+	st	er0,	NEAR _outputVal+02h
+
+;;							PWM_SET(); 
+CLINEA 0000H 0001H 016CH 0008H 0012H
+	bl	_PWM_SET
+
+;;						NOPms(100); 
+CLINEA 0000H 0001H 016EH 0007H 0012H
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;						NOPms(100);
+CLINEA 0000H 0001H 016FH 0007H 0011H
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;						NOPms(100);
+CLINEA 0000H 0001H 0170H 0007H 0011H
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;						NOPms(100);
+CLINEA 0000H 0001H 0171H 0007H 0011H
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;						NOPms(100);
+CLINEA 0000H 0001H 0172H 0007H 0011H
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;						NOPms(100);
+CLINEA 0000H 0001H 0173H 0007H 0011H
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;						NOPms(100);
+CLINEA 0000H 0001H 0174H 0007H 0011H
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;						NOPms(100);
+CLINEA 0000H 0001H 0175H 0007H 0011H
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;						NOPms(100);
+CLINEA 0000H 0001H 0176H 0007H 0011H
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;						NOPms(100);
+CLINEA 0000H 0001H 0177H 0007H 0011H
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;						NOPms(100);
+CLINEA 0000H 0001H 0178H 0007H 0011H
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;						NOPms(100);
+CLINEA 0000H 0001H 0179H 0007H 0011H
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;						NOPms(100);
+CLINEA 0000H 0001H 017AH 0007H 0011H
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;						NOPms(100);
+CLINEA 0000H 0001H 017BH 0007H 0011H
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;						NOPms(100);
+CLINEA 0000H 0001H 017CH 0007H 0011H
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;						NOPms(100); 
+CLINEA 0000H 0001H 017DH 0007H 0012H
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;						NOPms(100);
+CLINEA 0000H 0001H 017EH 0007H 0011H
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;						NOPms(100);
+CLINEA 0000H 0001H 017FH 0007H 0011H
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;						NOPms(100);
+CLINEA 0000H 0001H 0180H 0007H 0011H
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;						NOPms(100);
+CLINEA 0000H 0001H 0181H 0007H 0011H
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;						NOPms(100);
+CLINEA 0000H 0001H 0182H 0007H 0011H
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;						NOPms(100);
+CLINEA 0000H 0001H 0183H 0007H 0011H
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;						NOPms(100);
+CLINEA 0000H 0001H 0184H 0007H 0011H
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;						NOPms(100);
+CLINEA 0000H 0001H 0185H 0007H 0011H
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;						NOPms(100);
+CLINEA 0000H 0001H 0186H 0007H 0011H
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;						NOPms(100); 
+CLINEA 0000H 0001H 0187H 0007H 0012H
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;						main_clrWDT();   
+CLINEA 0000H 0001H 0188H 0007H 0017H
+	bl	_main_clrWDT
+
+;;						outputVal = 0;
+CLINEA 0000H 0001H 018AH 0007H 0014H
+	mov	er0,	#0 
+	st	er0,	NEAR _outputVal
+	st	er0,	NEAR _outputVal+02h
+
+;;						PWM_SET(); 
+CLINEA 0000H 0001H 018BH 0007H 0011H
+	bl	_PWM_SET
+CBLOCKEND 204 10 396
+
+;;					}
+CLINEA 0000H 0000H 018CH 0006H 0006H
+_$L55 :
+
+;;				if(_flgUartFin == 1)
+CLINEA 0000H 0001H 018EH 0005H 0018H
+	l	r0,	NEAR __flgUartFin
+	cmp	r0,	#01h
+	bne	_$M4
+	b	_$L52
+_$M4 :
+
+;;				if(bulbMode==10){
+CLINEA 0000H 0001H 0190H 0005H 0015H
+	l	er0,	NEAR _bulbMode
+	cmp	r0,	#0ah
+	cmpc	r1,	#00h
+	bne	_$L69
+CBLOCK 204 12 400
+
+;;					bulbMode+=1;
+CLINEA 0000H 0001H 0191H 0006H 0011H
+	add	er0,	#1 
+	st	er0,	NEAR _bulbMode
+
+;;					bulbIntensity =0;
+CLINEA 0000H 0001H 0192H 0006H 0016H
+	mov	er0,	#0 
+	st	er0,	NEAR _bulbIntensity
+CBLOCKEND 204 12 403
+
+;;				}
+CLINEA 0000H 0000H 0193H 0005H 0005H
+_$L69 :
+
+;;				if(bulbMode > 11)
+CLINEA 0000H 0001H 0194H 0005H 0015H
+	l	er0,	NEAR _bulbMode
+	cmp	r0,	#0bh
+	cmpc	r1,	#00h
+	ble	_$L71
+
+;;					bulbMode = 0;
+CLINEA 0000H 0001H 0195H 0006H 0012H
+	mov	er0,	#0 
+	st	er0,	NEAR _bulbMode
+_$L71 :
+
+;;				if(bulbMode==0){
+CLINEA 0000H 0001H 0197H 0005H 0014H
+	l	er0,	NEAR _bulbMode
+	bne	_$L73
+CBLOCK 204 13 407
+
+;;					bulbIntensity = 0;
+CLINEA 0000H 0001H 0198H 0006H 0017H
+	mov	er0,	#0 
+	st	er0,	NEAR _bulbIntensity
+
+;;					i++; 
+CLINEA 0000H 0000H 0199H 0006H 000AH
+	l	er0,	NEAR _i
+	add	er0,	#1 
+	st	er0,	NEAR _i
+
+;;					j=k=0;
+CLINEA 0000H 0001H 019AH 0006H 000BH
+	mov	er0,	#0 
+	st	er0,	NEAR _k
+	st	er0,	NEAR _j
+
+;;				else if(bulbMode == 1){
+CLINEA 0000H 0001H 019CH 0005H 001BH
+	bal	_$L79
+_$L73 :
+	cmp	r0,	#01h
+	cmpc	r1,	#00h
+	bne	_$L76
+CBLOCK 204 14 412
+
+;;					j++; 
+CLINEA 0000H 0000H 019DH 0006H 000AH
+	l	er0,	NEAR _j
+	add	er0,	#1 
+	st	er0,	NEAR _j
+
+;;					i=k=0;
+CLINEA 0000H 0001H 019EH 0006H 000BH
+	mov	er0,	#0 
+	st	er0,	NEAR _k
+	st	er0,	NEAR _i
+
+;;				else if(bulbMode == 2){
+CLINEA 0000H 0001H 01A0H 0005H 001BH
+	bal	_$L79
+_$L76 :
+	cmp	r0,	#02h
+	cmpc	r1,	#00h
+	bne	_$L79
+CBLOCK 204 15 416
+
+;;					k++; 
+CLINEA 0000H 0000H 01A1H 0006H 000AH
+	l	er0,	NEAR _k
+	add	er0,	#1 
+	st	er0,	NEAR _k
+
+;;					i=j=0;
+CLINEA 0000H 0001H 01A2H 0006H 000BH
+	mov	er0,	#0 
+	st	er0,	NEAR _j
+	st	er0,	NEAR _i
+CBLOCKEND 204 15 419
+
+;;				}  
+CLINEA 0000H 0000H 01A3H 0005H 0007H
+_$L79 :
+CBLOCKEND 204 14 536
+
+;;				if(bulbMode > 9){ 
+CLINEA 0000H 0001H 01A5H 0005H 0016H
+	l	er0,	NEAR _bulbMode
+	cmp	r0,	#09h
+	cmpc	r1,	#00h
+	ble	_$L81
+CBLOCKEND 204 13 536
+CBLOCK 204 16 421
+
+;;					i=j=k=0;
+CLINEA 0000H 0001H 01A6H 0006H 000DH
+	mov	er0,	#0 
+	st	er0,	NEAR _k
+	st	er0,	NEAR _j
+	st	er0,	NEAR _i
+
+;;					bulbIntensity++;
+CLINEA 0000H 0000H 01A7H 0006H 0015H
+	l	er0,	NEAR _bulbIntensity
+	add	er0,	#1 
+	st	er0,	NEAR _bulbIntensity
+
+;;					outputVal = bulbIntensity;
+CLINEA 0000H 0001H 01A8H 0006H 001FH
+	mov	er2,	#0 
+	st	er0,	NEAR _outputVal
+	st	er2,	NEAR _outputVal+02h
+
+;;					PWM_SET();   
+CLINEA 0000H 0001H 01A9H 0006H 0012H
+	bl	_PWM_SET
+
+;;					SET_RGB(0,0,0);  
+CLINEA 0000H 0001H 01AAH 0006H 0016H
+	mov	er0,	#0 
+	push	er0
+	mov	er2,	#0 
+	bl	_SET_RGB
+	add	sp,	#2 
+
+;;					NOPms(20);
+CLINEA 0000H 0001H 01ABH 0006H 000FH
+	mov	er0,	#20
+	bl	_NOPms
+
+;;					main_clrWDT();
+CLINEA 0000H 0001H 01ACH 0006H 0013H
+	bl	_main_clrWDT
+CBLOCKEND 204 16 429
+
+;;				else{
+CLINEA 0000H 0001H 01AEH 0005H 0009H
+	bal	_$L83
+_$L81 :
+CBLOCK 204 17 430
+
+;;					SET_RGB(i,j,k);  
+CLINEA 0000H 0001H 01AFH 0006H 0016H
+	l	er0,	NEAR _k
+	push	er0
+	l	er2,	NEAR _j
+	l	er0,	NEAR _i
+	bl	_SET_RGB
+	add	sp,	#2 
+
+;;					NOPms(20);
+CLINEA 0000H 0001H 01B0H 0006H 000FH
+	mov	er0,	#20
+	bl	_NOPms
+
+;;					main_clrWDT();
+CLINEA 0000H 0001H 01B1H 0006H 0013H
+	bl	_main_clrWDT
+CBLOCKEND 204 17 434
+
+;;				}
+CLINEA 0000H 0000H 01B2H 0005H 0005H
+_$L83 :
+
+;;				if(_flgUartFin == 1)
+CLINEA 0000H 0001H 01B4H 0005H 0018H
+	l	r0,	NEAR __flgUartFin
+	cmp	r0,	#01h
+	beq	_$M5
+	b	_$L84
+_$M5 :
+
+;;					break;
+CLINEA 0000H 0001H 01B5H 0006H 000BH
+	b	_$L52
+CBLOCKEND 204 1 536
+CFUNCTIONEND 204
+
+
+	rseg $$blinkRGB$main
+CFUNCTION 203
+
+_blinkRGB	:
+CBLOCK 203 1 540
+
+;;void blinkRGB(void){
+CLINEA 0000H 0001H 021CH 0001H 0014H
+	push	lr
+CBLOCK 203 2 540
+CRET 0000H
+
+;;	SET_RGB(255,0,0);
+CLINEA 0000H 0001H 021DH 0002H 0012H
+	mov	er0,	#0 
+	push	er0
+	mov	er2,	#0 
+	mov	r0,	#0ffh
+	bl	_SET_RGB
+	add	sp,	#2 
+
+;;	NOPms(100);  
+CLINEA 0000H 0001H 021EH 0002H 000EH
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;	SET_RGB(0,255,0);
+CLINEA 0000H 0001H 021FH 0002H 0012H
+	mov	er0,	#0 
+	push	er0
+	mov	r2,	#0ffh
+	mov	r3,	#00h
+	bl	_SET_RGB
+	add	sp,	#2 
+
+;;	NOPms(100);  
+CLINEA 0000H 0001H 0220H 0002H 000EH
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;	SET_RGB(0,0,255);
+CLINEA 0000H 0001H 0221H 0002H 0012H
+	mov	r0,	#0ffh
+	mov	r1,	#00h
+	push	er0
+	mov	er2,	#0 
+	mov	er0,	#0 
+	bl	_SET_RGB
+	add	sp,	#2 
+
+;;	NOPms(100);  
+CLINEA 0000H 0001H 0222H 0002H 000EH
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+
+;;	SET_RGB(0,0,0);
+CLINEA 0000H 0001H 0223H 0002H 0010H
+	mov	er0,	#0 
+	push	er0
+	mov	er2,	#0 
+	bl	_SET_RGB
+	add	sp,	#2 
+
+;;	SET_RGB(0,0,255);
+CLINEA 0000H 0001H 0224H 0002H 0012H
+	mov	r0,	#0ffh
+	mov	r1,	#00h
+	push	er0
+	mov	er2,	#0 
+	mov	er0,	#0 
+	bl	_SET_RGB
+	add	sp,	#2 
+
+;;	NOPms(100);  
+CLINEA 0000H 0001H 0225H 0002H 000EH
+	mov	r0,	#064h
+	mov	r1,	#00h
+	bl	_NOPms
+CBLOCKEND 203 2 550
+
+;;}
+CLINEA 0000H 0001H 0226H 0001H 0001H
+	pop	pc
+CBLOCKEND 203 1 550
+CFUNCTIONEND 203
+
+
+	rseg $$sweepRGB$main
+CFUNCTION 202
+
+_sweepRGB	:
+CBLOCK 202 1 552
+
+;;void sweepRGB(void){	  
+CLINEA 0000H 0001H 0228H 0001H 0017H
+	push	lr
+CBLOCK 202 2 552
+CRET 0000H
+
+;;		for(i=0;i<256;i++){
+CLINEA 0000H 0001H 0229H 0007H 000AH
+	mov	er0,	#0 
+	st	er0,	NEAR _i
+
+;;		for(i=0;i<256;i++){
+CLINEA 0000H 0000H 0229H 0011H 0013H
+_$L103 :
+CBLOCK 202 3 553
+
+;;			main_clrWDT(); 
+CLINEA 0000H 0001H 022AH 0004H 0012H
+	bl	_main_clrWDT
+
+;;			PFRUN = 0;
+CLINEA 0000H 0001H 022BH 0004H 000DH
+	rb	0f973h.0
+
+;;			PCRUN = 0; 
+CLINEA 0000H 0001H 022CH 0004H 000EH
+	rb	0f917h.0
+
+;;			PDRUN = 0;
+CLINEA 0000H 0001H 022DH 0004H 000DH
+	rb	0f927h.0
+
+;;			PWF0D = i; 
+CLINEA 0000H 0001H 022FH 0004H 000EH
+	l	er0,	NEAR _i
+	st	er0,	0f962h
+
+;;			PWDD  = 0; 
+CLINEA 0000H 0001H 0230H 0004H 000EH
+	mov	er0,	#0 
+	st	er0,	0f922h
+
+;;			PWCD =  0;
+CLINEA 0000H 0001H 0231H 0004H 000DH
+	st	er0,	0f912h
+
+;;			PFRUN = 1;    
+CLINEA 0000H 0001H 0233H 0004H 0011H
+	sb	0f973h.0
+
+;;			PCRUN = 1;  
+CLINEA 0000H 0001H 0234H 0004H 000FH
+	sb	0f917h.0
+
+;;			PDRUN = 1;
+CLINEA 0000H 0001H 0235H 0004H 000DH
+	sb	0f927h.0
+
+;;			NOPms(3);  
+CLINEA 0000H 0001H 0236H 0004H 000EH
+	mov	er0,	#3 
+	bl	_NOPms
+CBLOCKEND 202 3 567
+
+;;		for(i=0;i<256;i++){
+CLINEA 0000H 0000H 0229H 0011H 0013H
+	l	er0,	NEAR _i
+	add	er0,	#1 
+	st	er0,	NEAR _i
+
+;;		for(i=0;i<256;i++){
+CLINEA 0000H 0000H 0229H 000BH 0010H
+	cmp	r0,	#00h
+	cmpc	r1,	#01h
+	blt	_$L103
+
+;;		for(i=0;i<256;i++){
+CLINEA 0000H 0001H 0238H 0007H 000AH
+	mov	er0,	#0 
+	st	er0,	NEAR _i
+
+;;		for(i=0;i<256;i++){
+CLINEA 0000H 0000H 0238H 0011H 0013H
+_$L109 :
+CBLOCK 202 4 568
+
+;;			main_clrWDT(); 
+CLINEA 0000H 0001H 0239H 0004H 0012H
+	bl	_main_clrWDT
+
+;;			PFRUN = 0;
+CLINEA 0000H 0001H 023AH 0004H 000DH
+	rb	0f973h.0
+
+;;			PCRUN = 0; 
+CLINEA 0000H 0001H 023BH 0004H 000EH
+	rb	0f917h.0
+
+;;			PDRUN = 0;
+CLINEA 0000H 0001H 023CH 0004H 000DH
+	rb	0f927h.0
+
+;;			PWF0D = 0; 
+CLINEA 0000H 0001H 023EH 0004H 000EH
+	mov	er0,	#0 
+	st	er0,	0f962h
+
+;;			PWDD  = i; 
+CLINEA 0000H 0001H 023FH 0004H 000EH
+	l	er0,	NEAR _i
+	st	er0,	0f922h
+
+;;			PWCD =  0;
+CLINEA 0000H 0001H 0240H 0004H 000DH
+	mov	er0,	#0 
+	st	er0,	0f912h
+
+;;			PFRUN = 1;    
+CLINEA 0000H 0001H 0242H 0004H 0011H
+	sb	0f973h.0
+
+;;			PCRUN = 1;  
+CLINEA 0000H 0001H 0243H 0004H 000FH
+	sb	0f917h.0
+
+;;			PDRUN = 1;
+CLINEA 0000H 0001H 0244H 0004H 000DH
+	sb	0f927h.0
+
+;;			NOPms(3);  
+CLINEA 0000H 0001H 0245H 0004H 000EH
+	mov	er0,	#3 
+	bl	_NOPms
+CBLOCKEND 202 4 582
+
+;;		for(i=0;i<256;i++){
+CLINEA 0000H 0000H 0238H 0011H 0013H
+	l	er0,	NEAR _i
+	add	er0,	#1 
+	st	er0,	NEAR _i
+
+;;		for(i=0;i<256;i++){
+CLINEA 0000H 0000H 0238H 000BH 0010H
+	cmp	r0,	#00h
+	cmpc	r1,	#01h
+	blt	_$L109
+
+;;		for(i=0;i<256;i++){
+CLINEA 0000H 0001H 0247H 0007H 000AH
+	mov	er0,	#0 
+	st	er0,	NEAR _i
+
+;;		for(i=0;i<256;i++){
+CLINEA 0000H 0000H 0247H 0011H 0013H
+_$L115 :
+CBLOCK 202 5 583
+
+;;			main_clrWDT(); 
+CLINEA 0000H 0001H 0248H 0004H 0012H
+	bl	_main_clrWDT
+
+;;			PFRUN = 0;
+CLINEA 0000H 0001H 0249H 0004H 000DH
+	rb	0f973h.0
+
+;;			PCRUN = 0; 
+CLINEA 0000H 0001H 024AH 0004H 000EH
+	rb	0f917h.0
+
+;;			PDRUN = 0;
+CLINEA 0000H 0001H 024BH 0004H 000DH
+	rb	0f927h.0
+
+;;			PWF0D = 0; 
+CLINEA 0000H 0001H 024DH 0004H 000EH
+	mov	er0,	#0 
+	st	er0,	0f962h
+
+;;			PWDD  = 0; 
+CLINEA 0000H 0001H 024EH 0004H 000EH
+	st	er0,	0f922h
+
+;;			PWCD =  i;
+CLINEA 0000H 0001H 024FH 0004H 000DH
+	l	er0,	NEAR _i
+	st	er0,	0f912h
+
+;;			PFRUN = 1;    
+CLINEA 0000H 0001H 0251H 0004H 0011H
+	sb	0f973h.0
+
+;;			PCRUN = 1;  
+CLINEA 0000H 0001H 0252H 0004H 000FH
+	sb	0f917h.0
+
+;;			PDRUN = 1;
+CLINEA 0000H 0001H 0253H 0004H 000DH
+	sb	0f927h.0
+
+;;			NOPms(3);  
+CLINEA 0000H 0001H 0254H 0004H 000EH
+	mov	er0,	#3 
+	bl	_NOPms
+CBLOCKEND 202 5 597
+
+;;		for(i=0;i<256;i++){
+CLINEA 0000H 0000H 0247H 0011H 0013H
+	l	er0,	NEAR _i
+	add	er0,	#1 
+	st	er0,	NEAR _i
+
+;;		for(i=0;i<256;i++){
+CLINEA 0000H 0000H 0247H 000BH 0010H
+	cmp	r0,	#00h
+	cmpc	r1,	#01h
+	blt	_$L115
+
+;;		i=k=0;
+CLINEA 0000H 0001H 0256H 0003H 0008H
+	mov	er0,	#0 
+	st	er0,	NEAR _k
+	st	er0,	NEAR _i
+
+;;		j=255;
+CLINEA 0000H 0001H 0257H 0003H 0008H
+	mov	r0,	#0ffh
+	st	er0,	NEAR _j
+
+;;		SET_RGB(i,j,k);
+CLINEA 0000H 0001H 0258H 0003H 0011H
+	mov	er0,	#0 
+	push	er0
+	mov	r2,	#0ffh
+	mov	r3,	#00h
+	bl	_SET_RGB
+	add	sp,	#2 
+CBLOCKEND 202 2 601
+
+;;}
+CLINEA 0000H 0001H 0259H 0001H 0001H
+	pop	pc
+CBLOCKEND 202 1 601
+CFUNCTIONEND 202
+
+
+	rseg $$PWM_SET$main
+CFUNCTION 198
+
+_PWM_SET	:
+CBLOCK 198 1 603
+
+;;void PWM_SET(void){ 
+CLINEA 0000H 0001H 025BH 0001H 0014H
+	push	lr
+CBLOCK 198 2 603
+CRET 0000H
+
+;;			if(outputVal!= 0){
+CLINEA 0000H 0001H 025CH 0004H 0015H
+	l	er0,	NEAR _outputVal
+	l	er2,	NEAR _outputVal+02h
+	cmp	r0,	#00h
+	cmpc	r1,	#00h
+	cmpc	r2,	#00h
+	cmpc	r3,	#00h
+	beq	_$L120
+CBLOCK 198 3 604
+
+;;				main_clrWDT(); 
+CLINEA 0000H 0001H 025DH 0005H 0013H
+	bl	_main_clrWDT
+
+;;				PERUN = 0; 
+CLINEA 0000H 0001H 025EH 0005H 000FH
+	rb	0f937h.0
+
+;;				PWED  = outputVal;  
+CLINEA 0000H 0001H 025FH 0005H 0018H
+	l	er0,	NEAR _outputVal
+	st	er0,	0f932h
+
+;;				PERUN = 1; 
+CLINEA 0000H 0001H 0260H 0005H 000FH
+	sb	0f937h.0
+CBLOCKEND 198 3 609
+
+;;			}else{
+CLINEA 0000H 0000H 0261H 0004H 0009H
+	pop	pc
+_$L120 :
+CBLOCK 198 4 609
+
+;;				PERUN = 0;
+CLINEA 0000H 0001H 0262H 0005H 000EH
+	rb	0f937h.0
+CBLOCKEND 198 4 611
+
+;;			}
+CLINEA 0000H 0000H 0263H 0004H 0004H
+CBLOCKEND 198 2 612
+
+;;}
+CLINEA 0000H 0001H 0264H 0001H 0001H
+	pop	pc
+CBLOCKEND 198 1 612
+CFUNCTIONEND 198
+
+
+	rseg $$BLINK$main
+CFUNCTION 197
+
+_BLINK	:
+CBLOCK 197 1 614
+
+;;void BLINK(void){
+CLINEA 0000H 0001H 0266H 0001H 0011H
+	push	lr
+CBLOCK 197 2 614
+CRET 0000H
+
+;;	main_clrWDT();      
+CLINEA 0000H 0001H 0267H 0002H 0015H
+	bl	_main_clrWDT
+
+;;	PB4D = 0;
+CLINEA 0000H 0001H 0269H 0002H 000AH
+	rb	0f258h.4
+
+;;	PA1D = 1;
+CLINEA 0000H 0001H 026AH 0002H 000AH
+	sb	0f250h.1
+
+;;	PC2D = 1;
+CLINEA 0000H 0001H 026BH 0002H 000AH
+	sb	0f260h.2
+
+;;	NOPms(20);
+CLINEA 0000H 0001H 026CH 0002H 000BH
+	mov	er0,	#20
+	bl	_NOPms
+
+;;	PB4D = 1;
+CLINEA 0000H 0001H 026EH 0002H 000AH
+	sb	0f258h.4
+
+;;	PA1D = 0;
+CLINEA 0000H 0001H 026FH 0002H 000AH
+	rb	0f250h.1
+
+;;	PC2D = 1;
+CLINEA 0000H 0001H 0270H 0002H 000AH
+	sb	0f260h.2
+
+;;	NOPms(20);
+CLINEA 0000H 0001H 0271H 0002H 000BH
+	mov	er0,	#20
+	bl	_NOPms
+
+;;	PB4D = 1;
+CLINEA 0000H 0001H 0273H 0002H 000AH
+	sb	0f258h.4
+
+;;	PA1D = 1;
+CLINEA 0000H 0001H 0274H 0002H 000AH
+	sb	0f250h.1
+
+;;	PC2D = 0;
+CLINEA 0000H 0001H 0275H 0002H 000AH
+	rb	0f260h.2
+
+;;	NOPms(20);
+CLINEA 0000H 0001H 0276H 0002H 000BH
+	mov	er0,	#20
+	bl	_NOPms
+
+;;	PB4D = 1;
+CLINEA 0000H 0001H 0278H 0002H 000AH
+	sb	0f258h.4
+
+;;	PA1D = 1;
+CLINEA 0000H 0001H 0279H 0002H 000AH
+	sb	0f250h.1
+
+;;	PC2D = 1; 
+CLINEA 0000H 0001H 027AH 0002H 000BH
+	sb	0f260h.2
+CBLOCKEND 197 2 635
+
+;;}
+CLINEA 0000H 0001H 027BH 0001H 0001H
+	pop	pc
+CBLOCKEND 197 1 635
+CFUNCTIONEND 197
+
+
+	rseg $$GetColorUART_Command$main
+CFUNCTION 201
+
+_GetColorUART_Command	:
+CBLOCK 201 1 636
+
+;;char GetColorUART_Command(void){
+CLINEA 0000H 0001H 027CH 0001H 0020H
+	push	lr
+	push	er4
+CBLOCK 201 2 636
+CRET 0002H
+
+;;		for(i=0;i<40;i++){
+CLINEA 0000H 0001H 027DH 0007H 000AH
+	mov	er0,	#0 
+	st	er0,	NEAR _i
+
+;;		for(i=0;i<40;i++){
+CLINEA 0000H 0000H 027DH 0010H 0012H
+_$L127 :
+CBLOCK 201 3 637
+
+;;			val[i] = 0;
+CLINEA 0000H 0001H 027EH 0004H 000EH
+	mov	r2,	#00h
+	st	r2,	NEAR _val[er0]
+CBLOCKEND 201 3 639
+
+;;		for(i=0;i<40;i++){
+CLINEA 0000H 0000H 027DH 0010H 0012H
+	l	er0,	NEAR _i
+	add	er0,	#1 
+	st	er0,	NEAR _i
+
+;;		for(i=0;i<40;i++){
+CLINEA 0000H 0000H 027DH 000BH 000FH
+	cmp	r0,	#028h
+	cmpc	r1,	#00h
+	blt	_$L127
+
+;;		i =0;
+CLINEA 0000H 0001H 0280H 0003H 0007H
+	mov	er0,	#0 
+	st	er0,	NEAR _i
+
+;;		main_clrWDT();    
+CLINEA 0000H 0001H 0282H 0003H 0014H
+	bl	_main_clrWDT
+
+;;		_flgUartFin = 0;
+CLINEA 0000H 0001H 0284H 0003H 0012H
+	mov	r0,	#00h
+	st	r0,	NEAR __flgUartFin
+
+;;		uart_stop();
+CLINEA 0000H 0001H 0285H 0003H 000EH
+	bl	_uart_stop
+
+;;		uart_startReceive(val, 25, _funcUartFin); 
+CLINEA 0000H 0001H 0286H 0003H 002CH
+	mov	r0,	#BYTE1 OFFSET __funcUartFin
+	mov	r1,	#BYTE2 OFFSET __funcUartFin
+	push	er0
+	mov	er2,	#25
+	mov	r0,	#BYTE1 OFFSET _val
+	mov	r1,	#BYTE2 OFFSET _val
+	bl	_uart_startReceive
+	add	sp,	#2 
+
+;;			while(_flgUartFin != 1){ 
+CLINEA 0000H 0000H 0288H 0001H 0001H
+	bal	_$L167
+
+;;			while(_flgUartFin != 1){ 
+CLINEA 0000H 0000H 0288H 0004H 001CH
+_$L133 :
+CBLOCK 201 4 648
+
+;;				main_clrWDT();
+CLINEA 0000H 0001H 0289H 0005H 0012H
+	bl	_main_clrWDT
+CBLOCKEND 201 4 650
+
+;;			while(_flgUartFin != 1){ 
+CLINEA 0000H 0000H 0288H 0001H 0001H
+_$L167 :
+
+;;			while(_flgUartFin != 1){ 
+CLINEA 0000H 0000H 0288H 000BH 000FH
+	l	r0,	NEAR __flgUartFin
+	cmp	r0,	#01h
+	bne	_$L133
+
+;;		val[40] = 0; // Null-Terminated String Set 
+CLINEA 0000H 0001H 028CH 0003H 002DH
+	mov	r0,	#00h
+	st	r0,	NEAR _val+028h
+
+;;		for(;i<40;i++){
+CLINEA 0000H 0000H 028EH 0001H 0001H
+	bal	_$L168
+
+;;		for(;i<40;i++){
+CLINEA 0000H 0000H 028EH 0003H 0011H
+_$L137 :
+CBLOCK 201 5 654
+
+;;			main_clrWDT();
+CLINEA 0000H 0001H 028FH 0004H 0011H
+	bl	_main_clrWDT
+
+;;			if(val[i] == '*')
+CLINEA 0000H 0001H 0290H 0004H 0014H
+	l	er0,	NEAR _i
+	l	r0,	NEAR _val[er0]
+	cmp	r0,	#02ah
+	beq	_$L169
+
+;;				break;
+CLINEA 0000H 0001H 0291H 0005H 000AH
+CBLOCKEND 201 5 658
+
+;;		for(;i<40;i++){
+CLINEA 0000H 0000H 028EH 0003H 0011H
+	l	er0,	NEAR _i
+	add	er0,	#1 
+	st	er0,	NEAR _i
+
+;;		for(;i<40;i++){
+CLINEA 0000H 0000H 028EH 0001H 0001H
+_$L168 :
+
+;;		for(;i<40;i++){
+CLINEA 0000H 0000H 028EH 0008H 000CH
+	l	er0,	NEAR _i
+	cmp	r0,	#028h
+	cmpc	r1,	#00h
+	blt	_$L137
+
+;;		for(;i<40;i++){
+CLINEA 0000H 0000H 0293H 0001H 0001H
+	bal	_$L169
+
+;;		for(;i<40;i++){
+CLINEA 0000H 0000H 0293H 000DH 000FH
+_$L145 :
+CBLOCK 201 6 659
+
+;;			main_clrWDT();
+CLINEA 0000H 0001H 0294H 0004H 0011H
+	bl	_main_clrWDT
+
+;;			if(val[i] == '.')
+CLINEA 0000H 0001H 0295H 0004H 0014H
+	l	er0,	NEAR _i
+	l	r0,	NEAR _val[er0]
+	cmp	r0,	#02eh
+	beq	_$L144
+
+;;				break;
+CLINEA 0000H 0001H 0296H 0005H 000AH
+CBLOCKEND 201 6 663
+
+;;		for(;i<40;i++){
+CLINEA 0000H 0000H 0293H 000DH 000FH
+	l	er0,	NEAR _i
+	add	er0,	#1 
+	st	er0,	NEAR _i
+
+;;		for(;i<40;i++){
+CLINEA 0000H 0000H 0293H 0001H 0001H
+_$L169 :
+
+;;		for(;i<40;i++){
+CLINEA 0000H 0000H 0293H 0008H 000CH
+	l	er0,	NEAR _i
+	cmp	r0,	#028h
+	cmpc	r1,	#00h
+	blt	_$L145
+
+;;		} 
+CLINEA 0000H 0000H 0297H 0003H 0004H
+_$L144 :
+
+;;		R_Value = (val[++i]-48)*100 + (val[++i]-48)*10 + (val[++i]-48);
+CLINEA 0000H 0000H 0298H 0003H 0041H
+	l	er0,	NEAR _i
+	add	er0,	#1 
+	st	er0,	NEAR _i
+	l	r0,	NEAR _val[er0]
+	mov	r1,	#00h
+	add	er0,	#-48
+	mov	er2,	er0
+	add	er2,	er0
+	add	er2,	er0
+	sllc	r3,	#03h
+	sll	r2,	#03h
+	add	er2,	er0
+	sllc	r3,	#02h
+	sll	r2,	#02h
+	mov	er4,	er2
+	l	er0,	NEAR _i
+	add	er0,	#1 
+	st	er0,	NEAR _i
+	l	r0,	NEAR _val[er0]
+	mov	r1,	#00h
+	add	er0,	#-48
+	mov	er2,	er0
+	sllc	r3,	#02h
+	sll	r2,	#02h
+	add	er2,	er0
+	add	er2,	er2
+	mov	er0,	er2
+	add	er0,	er4
+	mov	er2,	er0
+	l	er0,	NEAR _i
+	add	er0,	#1 
+	st	er0,	NEAR _i
+	l	r0,	NEAR _val[er0]
+	mov	r1,	#00h
+	add	er0,	er2
+	add	er0,	#-48
+	mov	r2,	r1
+	extbw	er2
+	mov	r2,	r3
+	st	er0,	NEAR _R_Value
+	st	er2,	NEAR _R_Value+02h
+
+;;		for(;i<40;i++){
+CLINEA 0000H 0000H 0299H 0001H 0001H
+	bal	_$L170
+
+;;		for(;i<40;i++){
+CLINEA 0000H 0000H 0299H 0003H 0011H
+_$L153 :
+CBLOCK 201 7 665
+
+;;			main_clrWDT();
+CLINEA 0000H 0001H 029AH 0004H 0011H
+	bl	_main_clrWDT
+
+;;			if(val[i] == '.')
+CLINEA 0000H 0001H 029BH 0004H 0014H
+	l	er0,	NEAR _i
+	l	r0,	NEAR _val[er0]
+	cmp	r0,	#02eh
+	beq	_$L152
+
+;;				break;
+CLINEA 0000H 0001H 029CH 0005H 000AH
+CBLOCKEND 201 7 669
+
+;;		for(;i<40;i++){
+CLINEA 0000H 0000H 0299H 0003H 0011H
+	l	er0,	NEAR _i
+	add	er0,	#1 
+	st	er0,	NEAR _i
+
+;;		for(;i<40;i++){
+CLINEA 0000H 0000H 0299H 0001H 0001H
+_$L170 :
+
+;;		for(;i<40;i++){
+CLINEA 0000H 0000H 0299H 0008H 000CH
+	l	er0,	NEAR _i
+	cmp	r0,	#028h
+	cmpc	r1,	#00h
+	blt	_$L153
+
+;;		} 
+CLINEA 0000H 0000H 029DH 0003H 0004H
+_$L152 :
+
+;;		G_Value = (val[++i]-48)*100 + (val[++i]-48)*10 + (val[++i]-48);
+CLINEA 0000H 0000H 029EH 0003H 0041H
+	l	er0,	NEAR _i
+	add	er0,	#1 
+	st	er0,	NEAR _i
+	l	r0,	NEAR _val[er0]
+	mov	r1,	#00h
+	add	er0,	#-48
+	mov	er2,	er0
+	add	er2,	er0
+	add	er2,	er0
+	sllc	r3,	#03h
+	sll	r2,	#03h
+	add	er2,	er0
+	sllc	r3,	#02h
+	sll	r2,	#02h
+	mov	er4,	er2
+	l	er0,	NEAR _i
+	add	er0,	#1 
+	st	er0,	NEAR _i
+	l	r0,	NEAR _val[er0]
+	mov	r1,	#00h
+	add	er0,	#-48
+	mov	er2,	er0
+	sllc	r3,	#02h
+	sll	r2,	#02h
+	add	er2,	er0
+	add	er2,	er2
+	mov	er0,	er2
+	add	er0,	er4
+	mov	er2,	er0
+	l	er0,	NEAR _i
+	add	er0,	#1 
+	st	er0,	NEAR _i
+	l	r0,	NEAR _val[er0]
+	mov	r1,	#00h
+	add	er0,	er2
+	add	er0,	#-48
+	mov	r2,	r1
+	extbw	er2
+	mov	r2,	r3
+	st	er0,	NEAR _G_Value
+	st	er2,	NEAR _G_Value+02h
+
+;;		for(;i<40;i++){
+CLINEA 0000H 0000H 029FH 0001H 0001H
+	bal	_$L171
+
+;;		for(;i<40;i++){
+CLINEA 0000H 0000H 029FH 0003H 0011H
+_$L161 :
+CBLOCK 201 8 671
+
+;;			main_clrWDT();
+CLINEA 0000H 0001H 02A0H 0004H 0011H
+	bl	_main_clrWDT
+
+;;			if(val[i] == '.')
+CLINEA 0000H 0001H 02A1H 0004H 0014H
+	l	er0,	NEAR _i
+	l	r0,	NEAR _val[er0]
+	cmp	r0,	#02eh
+	beq	_$L160
+
+;;				break;
+CLINEA 0000H 0001H 02A2H 0005H 000AH
+CBLOCKEND 201 8 675
+
+;;		for(;i<40;i++){
+CLINEA 0000H 0000H 029FH 0003H 0011H
+	l	er0,	NEAR _i
+	add	er0,	#1 
+	st	er0,	NEAR _i
+
+;;		for(;i<40;i++){
+CLINEA 0000H 0000H 029FH 0001H 0001H
+_$L171 :
+
+;;		for(;i<40;i++){
+CLINEA 0000H 0000H 029FH 0008H 000CH
+	l	er0,	NEAR _i
+	cmp	r0,	#028h
+	cmpc	r1,	#00h
+	blt	_$L161
+
+;;		} 
+CLINEA 0000H 0000H 02A3H 0003H 0004H
+_$L160 :
+
+;;		B_Value = (val[++i]-48)*100 + (val[++i]-48)*10 + (val[++i]-48);
+CLINEA 0000H 0000H 02A4H 0003H 0041H
+	l	er0,	NEAR _i
+	add	er0,	#1 
+	st	er0,	NEAR _i
+	l	r0,	NEAR _val[er0]
+	mov	r1,	#00h
+	add	er0,	#-48
+	mov	er2,	er0
+	add	er2,	er0
+	add	er2,	er0
+	sllc	r3,	#03h
+	sll	r2,	#03h
+	add	er2,	er0
+	sllc	r3,	#02h
+	sll	r2,	#02h
+	mov	er4,	er2
+	l	er0,	NEAR _i
+	add	er0,	#1 
+	st	er0,	NEAR _i
+	l	r0,	NEAR _val[er0]
+	mov	r1,	#00h
+	add	er0,	#-48
+	mov	er2,	er0
+	sllc	r3,	#02h
+	sll	r2,	#02h
+	add	er2,	er0
+	add	er2,	er2
+	mov	er0,	er2
+	add	er0,	er4
+	mov	er2,	er0
+	l	er0,	NEAR _i
+	add	er0,	#1 
+	st	er0,	NEAR _i
+	l	r0,	NEAR _val[er0]
+	mov	r1,	#00h
+	add	er0,	er2
+	add	er0,	#-48
+	mov	r2,	r1
+	extbw	er2
+	mov	r2,	r3
+	st	er0,	NEAR _B_Value
+	st	er2,	NEAR _B_Value+02h
+
+;;		temp = 0;
+CLINEA 0000H 0001H 02A6H 0003H 000BH
+	mov	r0,	#00h
+	st	r0,	NEAR _temp
+CBLOCKEND 201 2 679
+
+;;}
+CLINEA 0000H 0001H 02A7H 0001H 0001H
+	pop	er4
+	pop	pc
+CBLOCKEND 201 1 679
+CFUNCTIONEND 201
+
+
+	rseg $$GetUART_Command$main
+CFUNCTION 199
+
+_GetUART_Command	:
+CBLOCK 199 1 681
+
+;;void GetUART_Command(void){   
+CLINEA 0000H 0001H 02A9H 0001H 001EH
+	push	lr
+CBLOCK 199 2 681
+CRET 0000H
+
+;;		main_clrWDT();    
+CLINEA 0000H 0001H 02ABH 0003H 0014H
+	bl	_main_clrWDT
+
+;;		_flgUartFin = 0;
+CLINEA 0000H 0001H 02ADH 0003H 0012H
+	mov	r0,	#00h
+	st	r0,	NEAR __flgUartFin
+
+;;		uart_stop();
+CLINEA 0000H 0001H 02AEH 0003H 000EH
+	bl	_uart_stop
+
+;;		uart_startReceive(commandVal, 3, _funcUartFin);  
+CLINEA 0000H 0001H 02AFH 0003H 0033H
+	mov	r0,	#BYTE1 OFFSET __funcUartFin
+	mov	r1,	#BYTE2 OFFSET __funcUartFin
+	push	er0
+	mov	er2,	#3 
+	mov	r0,	#BYTE1 OFFSET _commandVal
+	mov	r1,	#BYTE2 OFFSET _commandVal
+	bl	_uart_startReceive
+	add	sp,	#2 
+
+;;		while(_flgUartFin != 1){ 
+CLINEA 0000H 0000H 02B2H 0001H 0001H
+	bal	_$L177
+
+;;		while(_flgUartFin != 1){ 
+CLINEA 0000H 0000H 02B2H 0003H 001BH
+_$L175 :
+CBLOCK 199 3 690
+
+;;			main_clrWDT(); 
+CLINEA 0000H 0001H 02B3H 0004H 0012H
+	bl	_main_clrWDT
+
+;;			I2C_Read(0x38u, &Prox_PS_LSB, 1, uniRawSensorOut._ucharArr, 1);
+CLINEA 0000H 0001H 02B4H 0004H 0042H
+	mov	r0,	#01h
+	push	r0
+	mov	r0,	#BYTE1 OFFSET _uniRawSensorOut
+	mov	r1,	#BYTE2 OFFSET _uniRawSensorOut
+	push	er0
+	mov	r0,	#01h
+	push	r0
+	mov	r2,	#BYTE1 OFFSET _Prox_PS_LSB
+	mov	r3,	#BYTE2 OFFSET _Prox_PS_LSB
+	mov	r0,	#038h
+	bl	_I2C_Read
+	add	sp,	#6 
+CBLOCKEND 199 3 734
+
+;;		while(_flgUartFin != 1){ 
+CLINEA 0000H 0000H 02B2H 0001H 0001H
+_$L177 :
+
+;;		while(_flgUartFin != 1){ 
+CLINEA 0000H 0000H 02B2H 0008H 000CH
+	l	r0,	NEAR __flgUartFin
+	cmp	r0,	#01h
+	bne	_$L175
+CBLOCKEND 199 2 736
+
+;;}
+CLINEA 0000H 0001H 02E0H 0001H 0001H
+	pop	pc
+CBLOCKEND 199 1 736
+CFUNCTIONEND 199
+
+
+	rseg $$main_clrWDT$main
+CFUNCTION 177
+
+_main_clrWDT	:
+CBLOCK 177 1 762
+
+;;{
+CLINEA 0000H 0001H 02FAH 0001H 0001H
+CBLOCK 177 2 762
+
+;;	do {
+CLINEA 0000H 0001H 02FBH 0002H 0005H
+_$L181 :
+CBLOCK 177 3 763
+
+;;		WDTCON = 0x5Au;
+CLINEA 0000H 0001H 02FCH 0003H 0011H
+	mov	r0,	#05ah
+	st	r0,	0f00eh
+CBLOCKEND 177 3 765
+
+;;	} while (WDP != 1);
+CLINEA 0000H 0000H 02FDH 0002H 0014H
+	tb	0f00eh.0
+	beq	_$L181
+
+;;	WDTCON = 0xA5u;
+CLINEA 0000H 0001H 02FEH 0002H 0010H
+	mov	r0,	#0a5h
+	st	r0,	0f00eh
+CBLOCKEND 177 2 767
+
+;;}
+CLINEA 0000H 0001H 02FFH 0001H 0001H
+	rt
+CBLOCKEND 177 1 767
+CFUNCTIONEND 177
+
+
+	rseg $$NOP1000$main
+CFUNCTION 194
+
+_NOP1000	:
+CBLOCK 194 1 777
+
+;;{
+CLINEA 0000H 0001H 0309H 0001H 0001H
+CBLOCK 194 2 777
+CLOCAL 4AH 0002H 0000H 0002H "ONCNT" 02H 00H 01H
+CBLOCKEND 194 2 784
+
+;;}
+CLINEA 0000H 0001H 0310H 0001H 0001H
+	rt
+CBLOCKEND 194 1 784
+CFUNCTIONEND 194
+
+
+	rseg $$NOPms$main
+CFUNCTION 195
+
+_NOPms	:
+CBLOCK 195 1 800
+
+;;{
+CLINEA 0000H 0001H 0320H 0001H 0001H
+	push	lr
+	push	xr4
+	push	bp
+	push	er8
+	mov	er8,	er0
+CBLOCK 195 2 800
+CRET 0008H
+CARGUMENT 46H 0002H 0028H "ms" 02H 00H 01H
+CLOCAL 46H 0002H 002AH 0002H "timerThres" 02H 00H 01H
+CLOCAL 46H 0001H 001AH 0002H "TimeFlag" 02H 00H 00H
+CLOCAL 46H 0002H 0026H 0002H "TempSec" 02H 00H 01H
+CLOCAL 46H 0002H 0024H 0002H "timer" 02H 00H 01H
+CLOCAL 4AH 0002H 0000H 0002H "timertest" 02H 00H 01H
+
+;;	TempSec = ms;
+CLINEA 0000H 0001H 0327H 0002H 000EH
+	mov	er4,	er0
+
+;;	TimeFlag = 0;
+CLINEA 0000H 0001H 0328H 0002H 000EH
+	mov	r6,	#00h
+
+;;	tm_init(TM_CH_NO_AB);
+CLINEA 0000H 0001H 032AH 0002H 0016H
+	mov	r0,	#01h
+	bl	_tm_init
+
+;;	tm_setABSource(TM_CS_HTBCLK);
+CLINEA 0000H 0000H 018BH 0002H 0015H
+	sb	0f8eah.0
+
+;;	tm_setABSource(TM_CS_HTBCLK);
+CLINEA 0000H 0000H 018CH 0002H 001AH
+	rb	0f8eah.1
+
+;;	tm_setABData(0xffff);
+CLINEA 0000H 0000H 0155H 0002H 0025H
+	mov	r0,	#0ffh
+	st	r0,	0f8e8h
+
+;;	tm_setABData(0xffff);
+CLINEA 0000H 0000H 0156H 0002H 0023H
+	st	r0,	0f8ech
+
+;;	if(ms < 128){
+CLINEA 0000H 0001H 032EH 0002H 000EH
+	mov	er0,	er8
+	cmp	r8,	#080h
+	cmpc	r9,	#00h
+	bge	_$L189
+CBLOCK 195 3 814
+
+;;		timerThres = 0x1FF * ms;
+CLINEA 0000H 0001H 032FH 0003H 001AH
+	sllc	r1,	#07h
+	sll	r0,	#07h
+	sllc	r1,	#02h
+	sll	r0,	#02h
+	sub	r0,	r8
+	subc	r1,	r9
+	mov	bp,	er0
+
+;;		TimeFlag = 0;
+CLINEA 0000H 0001H 0330H 0003H 000FH
+CBLOCKEND 195 3 817
+
+;;	}
+CLINEA 0000H 0000H 0331H 0002H 0002H
+_$L189 :
+
+;;	if(ms == 128){
+CLINEA 0000H 0001H 0332H 0002H 000FH
+	cmp	r8,	#080h
+	cmpc	r9,	#00h
+	bne	_$L191
+CBLOCK 195 4 818
+
+;;		timerThres = 0xFFFF;
+CLINEA 0000H 0001H 0333H 0003H 0016H
+	mov	bp,	#-1
+
+;;		TimeFlag = 0;
+CLINEA 0000H 0001H 0334H 0003H 000FH
+	mov	r6,	#00h
+CBLOCKEND 195 4 821
+
+;;	}
+CLINEA 0000H 0000H 0335H 0002H 0002H
+_$L191 :
+
+;;	if(ms > 128){
+CLINEA 0000H 0001H 0336H 0002H 000EH
+	cmp	r8,	#080h
+	cmpc	r9,	#00h
+	ble	_$L201
+CBLOCK 195 5 822
+
+;;		while(TempSec > 128){
+CLINEA 0000H 0000H 0337H 0001H 0001H
+	bal	_$L211
+
+;;		while(TempSec > 128){
+CLINEA 0000H 0000H 0337H 0003H 0017H
+_$L197 :
+CBLOCK 195 6 823
+
+;;			TempSec -= 128;
+CLINEA 0000H 0001H 0338H 0004H 0012H
+	add	r0,	#080h
+	addc	r1,	#0ffh
+	mov	er4,	er0
+
+;;			TimeFlag++;
+CLINEA 0000H 0000H 0339H 0004H 000EH
+	add	r6,	#01h
+CBLOCKEND 195 6 826
+
+;;		while(TempSec > 128){
+CLINEA 0000H 0000H 0337H 0001H 0001H
+_$L211 :
+
+;;		while(TempSec > 128){
+CLINEA 0000H 0000H 0337H 0008H 000CH
+	mov	er0,	er4
+	cmp	r4,	#080h
+	cmpc	r5,	#00h
+	bgt	_$L197
+
+;;		if(TempSec != 0){
+CLINEA 0000H 0001H 033BH 0003H 0013H
+	mov	er4,	er4
+	beq	_$L199
+CBLOCK 195 7 827
+
+;;			timerThres = 0x1FF * TempSec;
+CLINEA 0000H 0001H 033CH 0004H 0020H
+	sllc	r1,	#07h
+	sll	r0,	#07h
+	sllc	r1,	#02h
+	sll	r0,	#02h
+	sub	r0,	r4
+	subc	r1,	r5
+	mov	bp,	er0
+CBLOCKEND 195 7 829
+
+;;		else{
+CLINEA 0000H 0001H 033EH 0003H 0007H
+	bal	_$L201
+_$L199 :
+CBLOCK 195 8 830
+
+;;			timerThres = 0xFFFF;
+CLINEA 0000H 0001H 033FH 0004H 0017H
+	mov	bp,	#-1
+
+;;			TimeFlag--;
+CLINEA 0000H 0000H 0340H 0004H 000EH
+	add	r6,	#0ffh
+CBLOCKEND 195 8 833
+
+;;		}
+CLINEA 0000H 0000H 0341H 0003H 0003H
+_$L201 :
+CBLOCKEND 195 5 834
+
+;;	main_clrWDT();	
+CLINEA 0000H 0001H 0345H 0002H 0010H
+	bl	_main_clrWDT
+
+;;	tm_startAB();
+CLINEA 0000H 0001H 00CFH 0002H 000AH
+	mov	r0,	#00h
+	st	r0,	0f8e9h
+
+;;	tm_startAB();
+CLINEA 0000H 0000H 00D0H 0002H 000BH
+	sb	0f8ebh.0
+
+;;	timer = tm_getABCounter();
+CLINEA 0000H 0000H 011EH 0002H 001BH
+	l	r0,	0f8e9h
+	mov	r1,	#00h
+	mov	er2,	er0
+
+;;	timer = tm_getABCounter();
+CLINEA 0000H 0000H 011FH 0002H 0014H
+	l	r0,	0f8edh
+	or	r3,	r0
+
+;;	timer = tm_getABCounter();
+CLINEA 0000H 0000H 0120H 0002H 000CH
+	mov	er0,	er2
+
+;;	while(timer < timerThres){
+CLINEA 0000H 0001H 0349H 0002H 001BH
+	bal	_$L204
+_$L206 :
+CBLOCK 195 9 841
+
+;;		timer = tm_getABCounter();
+CLINEA 0000H 0000H 011EH 0002H 001BH
+	l	r0,	0f8e9h
+	mov	r1,	#00h
+	mov	er2,	er0
+
+;;		timer = tm_getABCounter();
+CLINEA 0000H 0000H 011FH 0002H 0014H
+	l	r0,	0f8edh
+	or	r3,	r0
+
+;;		timer = tm_getABCounter();
+CLINEA 0000H 0000H 0120H 0002H 000CH
+	mov	er0,	er2
+
+;;		timer = tm_getABCounter();
+CLINEA 0000H 0000H 034AH 0003H 001CH
+CBLOCKEND 195 9 844
+
+;;	}
+CLINEA 0000H 0000H 034CH 0002H 0002H
+_$L204 :
+
+;;	while(timer < timerThres){
+CLINEA 0000H 0000H 0349H 0008H 000CH
+	cmp	er0,	bp
+	blt	_$L206
+
+;;	if(TimeFlag !=0){
+CLINEA 0000H 0001H 034DH 0002H 0012H
+	cmp	r6,	#00h
+	beq	_$L209
+
+;;		tm_stopAB();
+CLINEA 0000H 0001H 0103H 0002H 000BH
+	rb	0f8ebh.0
+
+;;		TimeFlag--;
+CLINEA 0000H 0000H 034FH 0003H 000DH
+	add	r6,	#0ffh
+
+;;		timerThres = 0xFFFF;
+CLINEA 0000H 0001H 0350H 0003H 0016H
+	mov	bp,	#-1
+
+;;		goto TimerRestart;
+CLINEA 0000H 0001H 0351H 0003H 0014H
+	bal	_$L201
+
+;;	}
+CLINEA 0000H 0000H 0352H 0002H 0002H
+_$L209 :
+CBLOCKEND 195 2 851
+
+;;}
+CLINEA 0000H 0001H 0353H 0001H 0001H
+	pop	er8
+	pop	bp
+	pop	xr4
+	pop	pc
+CBLOCKEND 195 1 851
+CFUNCTIONEND 195
+
+
+	rseg $$Initialization$main
+CFUNCTION 178
+
+_Initialization	:
+CBLOCK 178 1 858
+
+;;{
+CLINEA 0000H 0001H 035AH 0001H 0001H
+	push	lr
+CBLOCK 178 2 858
+CRET 0000H
+
+;;	DSIO0 = 0; // 0=> Enables Synchronous Serial Port 0 (initial value).
+CLINEA 0000H 0001H 035EH 0002H 0045H
+	rb	0f02ah.0
+
+;;	DUA0  = 0; // 0=> Enables the operation of UART0 (initial value). 
+CLINEA 0000H 0001H 0360H 0002H 0043H
+	rb	0f02ah.2
+
+;;	DUA1  = 1; // 0=> Enables Uart1 (initial value). 
+CLINEA 0000H 0001H 0362H 0002H 0032H
+	sb	0f02ah.3
+
+;;	DI2C1 = 1; // 0=> Enables I2C bus Interface (Slave) (initial value).
+CLINEA 0000H 0001H 0363H 0002H 0045H
+	sb	0f02ah.6
+
+;;	DI2C0 = 0; // 0=> Enables I2C bus Interface (Master) (initial value).	
+CLINEA 0000H 0001H 0364H 0002H 0047H
+	rb	0f02ah.7
+
+;;	BLKCON4 = 0x01; // 0=> Enables SA-ADC
+CLINEA 0000H 0001H 0366H 0002H 0026H
+	mov	r0,	#01h
+	st	r0,	0f02ch
+
+;;	BLKCON6 = 0xC3; // (1=disables; 0=enables) the operation of Timers 8, 9, A, E, F.
+CLINEA 0000H 0001H 0367H 0002H 0052H
+	mov	r0,	#0c3h
+	st	r0,	0f02eh
+
+;;	BLKCON7 = 0x00; // (1=disables; 0=enables) the operation of PWM (PWMC, PWMD, PWME, PWMF
+CLINEA 0000H 0001H 0369H 0002H 0058H
+	mov	r0,	#00h
+	st	r0,	0f02fh
+
+;;	PortA_Low();	//Initialize all 3 Ports of Q111 Port A to GPIO-Low
+CLINEA 0000H 0001H 036DH 0002H 0041H
+	bl	_PortA_Low
+
+;;	PortB_Low();	//Initialize all 8 Ports of Q111 Port B to GPIO-Low
+CLINEA 0000H 0001H 036EH 0002H 0041H
+	bl	_PortB_Low
+
+;;	PortC_Low();	//Initialize all 4 Ports of Q111 Port C to GPIO-Low
+CLINEA 0000H 0001H 036FH 0002H 0041H
+	bl	_PortC_Low
+
+;;	SetOSC(); //8MHz
+CLINEA 0000H 0001H 0372H 0002H 0011H
+	bl	_SetOSC
+
+;;	irq_di(); 	//Disable Interrupts...
+CLINEA 0000H 0001H 0375H 0002H 0023H
+	bl	_irq_di
+
+;;	irq_init();	//Initialize Interrupts (All Off and NO Requests)
+CLINEA 0000H 0001H 0376H 0002H 003EH
+	bl	_irq_init
+
+;;	IE0 = IE1 = IE2 = IE3 = IE4 = IE5 = IE6 = IE7 = 0; // 0=DISABLED; 1=ENABLED
+CLINEA 0000H 0001H 0379H 0002H 004CH
+	mov	r0,	#00h
+	st	r0,	0f017h
+	st	r0,	0f016h
+	st	r0,	0f015h
+	st	r0,	0f014h
+	st	r0,	0f013h
+	st	r0,	0f012h
+	st	r0,	0f011h
+	st	r0,	0f010h
+
+;;	IRQ0 = IRQ1 = IRQ2 = IRQ3 = IRQ4 = IRQ5 = IRQ6 = IRQ7 = 0;	//Clear all Requests...
+CLINEA 0000H 0001H 037CH 0002H 0053H
+	st	r0,	0f01fh
+	st	r0,	0f01eh
+	st	r0,	0f01dh
+	st	r0,	0f01ch
+	st	r0,	0f01bh
+	st	r0,	0f01ah
+	st	r0,	0f019h
+	st	r0,	0f018h
+
+;;	E2H = 0; 	// E2H is the Enable flag for 2Hz TBC Interrupt (1=ENABLED)
+CLINEA 0000H 0001H 037EH 0002H 0046H
+	rb	0f017h.3
+
+;;	irq_setHdr((unsigned char)IRQ_NO_UA0INT, _intUart);
+CLINEA 0000H 0001H 0380H 0002H 0034H
+	mov	r2,	#BYTE1 OFFSET __intUart
+	mov	r3,	#BYTE2 OFFSET __intUart
+	mov	r0,	#0fh
+	bl	_irq_setHdr
+
+;;	EUA0 = 1; 	// EUA0 is the enable flag for the UART0 interrupt (1=ENABLED)
+CLINEA 0000H 0001H 0381H 0002H 004AH
+	sb	0f014h.0
+
+;;	irq_setHdr((unsigned char)IRQ_NO_I2CMINT, _intI2c);
+CLINEA 0000H 0001H 0384H 0002H 0034H
+	mov	r2,	#BYTE1 OFFSET __intI2c
+	mov	r3,	#BYTE2 OFFSET __intI2c
+	mov	r0,	#0ch
+	bl	_irq_setHdr
+
+;;	EI2CM = 1;
+CLINEA 0000H 0001H 0385H 0002H 000BH
+	sb	0f012h.7
+
+;;	QI2CM = 0; 
+CLINEA 0000H 0001H 0386H 0002H 000CH
+	rb	0f01ah.7
+
+;;	PB2MD0 = 0;
+CLINEA 0000H 0001H 0389H 0002H 000CH
+	rb	0f25ch.2
+
+;;	PB2MD1 = 0;
+CLINEA 0000H 0001H 038AH 0002H 000CH
+	rb	0f25dh.2
+
+;;	PB2DIR = 1;
+CLINEA 0000H 0001H 038BH 0002H 000CH
+	sb	0f259h.2
+
+;;	PB2C0 = 0;
+CLINEA 0000H 0001H 038CH 0002H 000BH
+	rb	0f25ah.2
+
+;;	PB2C1 = 1;
+CLINEA 0000H 0001H 038DH 0002H 000BH
+	sb	0f25bh.2
+
+;;	PB2E0 = 1;
+CLINEA 0000H 0001H 038EH 0002H 000BH
+	sb	0f024h.6
+
+;;	PB2E1 = 0;
+CLINEA 0000H 0001H 038FH 0002H 000BH
+	rb	0f025h.6
+
+;;	irq_setHdr((unsigned char)IRQ_NO_PB2INT, _intPB2);
+CLINEA 0000H 0001H 0393H 0002H 0033H
+	mov	r2,	#BYTE1 OFFSET __intPB2
+	mov	r3,	#BYTE2 OFFSET __intPB2
+	mov	r0,	#07h
+	bl	_irq_setHdr
+
+;;	EPB2 = 1;
+CLINEA 0000H 0001H 0394H 0002H 000AH
+	sb	0f011h.6
+
+;;	QPB2 = 0;
+CLINEA 0000H 0001H 0395H 0002H 000AH
+	rb	0f019h.6
+
+;;	irq_ei();	// Enable Interrupts...
+CLINEA 0000H 0001H 0397H 0002H 0022H
+	bl	_irq_ei
+
+;;	WDTMOD = 0x03; 	// 0x03=overflow 8sec...
+CLINEA 0000H 0001H 039AH 0002H 0029H
+	mov	r0,	#03h
+	st	r0,	0f00fh
+
+;;	main_clrWDT(); 	// Clear WDT
+CLINEA 0000H 0001H 039BH 0002H 001DH
+	bl	_main_clrWDT
+
+;;	i2c_init(I2C_MOD_FST, (unsigned short)HSCLK_KHZ, I2C_SYN_OFF);
+CLINEA 0000H 0001H 03A1H 0002H 003FH
+	mov	r0,	#00h
+	push	r0
+	mov	r2,	#00h
+	mov	r3,	#020h
+	mov	r0,	#01h
+	bl	_i2c_init
+	add	sp,	#2 
+
+;;			     &_uartSetParam );						// Param... 	 
+CLINEA 0000H 0001H 03A7H 0009H 002DH
+	mov	r0,	#BYTE1 OFFSET __uartSetParam
+	mov	r1,	#BYTE2 OFFSET __uartSetParam
+	push	er0
+	mov	r2,	#00h
+	mov	r3,	#020h
+	mov	r0,	#02h
+	bl	_uart_init
+	add	sp,	#2 
+
+;;	uart_PortSet();
+CLINEA 0000H 0001H 03A8H 0002H 0010H
+	bl	_uart_PortSet
+
+;;	_flgUartFin = 0;
+CLINEA 0000H 0001H 03A9H 0002H 0011H
+	mov	r0,	#00h
+	st	r0,	NEAR __flgUartFin
+
+;;	uart_stop();
+CLINEA 0000H 0001H 03AAH 0002H 000DH
+	bl	_uart_stop
+
+;;	PB4DIR = 0;		// PortB Bit7 set to Output Mode...
+CLINEA 0000H 0001H 03AEH 0002H 0031H
+	rb	0f259h.4
+
+;;	PB4C1  = 1;		// PortB Bit7 set to CMOS Output...
+CLINEA 0000H 0001H 03AFH 0002H 0031H
+	sb	0f25bh.4
+
+;;	PB4C0  = 1;	
+CLINEA 0000H 0001H 03B0H 0002H 000DH
+	sb	0f25ah.4
+
+;;	PB4MD1  = 0;	// PortB Bit7 set to General Purpose Output...
+CLINEA 0000H 0001H 03B1H 0002H 003CH
+	rb	0f25dh.4
+
+;;	PB4MD0  = 0;
+CLINEA 0000H 0001H 03B2H 0002H 000DH
+	rb	0f25ch.4
+
+;;	PB4D = 0;		// B.7 Output OFF....
+CLINEA 0000H 0001H 03B3H 0002H 0021H
+	rb	0f258h.4
+CBLOCKEND 178 2 949
+
+;;}//End Initialization
+CLINEA 0000H 0001H 03B5H 0001H 0015H
+	pop	pc
+CBLOCKEND 178 1 949
+CFUNCTIONEND 178
+
+
+	rseg $$OutputPWM$main
+CFUNCTION 196
+
+_OutputPWM	:
+CBLOCK 196 1 953
+
+;;void OutputPWM(void){ 
+CLINEA 0000H 0001H 03B9H 0001H 0016H
+CBLOCK 196 2 953
+
+;;      PA2DIR = 0;       // PortB Bit0 set to Output Mode... 
+CLINEA 0000H 0001H 03C5H 0007H 003CH
+	rb	0f251h.2
+
+;;      PA2C1  = 1;       // PortB Bit0 set to CMOS Output...
+CLINEA 0000H 0001H 03C8H 0007H 003BH
+	sb	0f253h.2
+
+;;      PA2C0  = 1;       
+CLINEA 0000H 0001H 03C9H 0007H 0018H
+	sb	0f252h.2
+
+;;      PA2MD1  = 0;            // PortC Bit0 set to PWM Output (1,0)...
+CLINEA 0000H 0001H 03CCH 0007H 0046H
+	rb	0f255h.2
+
+;;      PA2MD0  = 1;    
+CLINEA 0000H 0001H 03CDH 0007H 0016H
+	sb	0f254h.2
+
+;;      PECS1 = 0;        //00= LS; 01=HS; 10=PLL
+CLINEA 0000H 0001H 03D0H 0007H 002FH
+	rb	0f936h.1
+
+;;      PECS0 = 1;
+CLINEA 0000H 0001H 03D1H 0007H 0010H
+	sb	0f936h.0
+
+;;      PWEP = 250;            // Init Period to (1=255kHz; 10=46kHz; 50=10kHz; 200=2.5kH; ; 3185 = 160Hz; 3400=150Hz; 4250=120Hz; 5000=102Hz)
+CLINEA 0000H 0001H 03D7H 0007H 008CH
+	mov	r0,	#0fah
+	mov	r1,	#00h
+	st	er0,	0f930h
+
+;;	  PWED = 0;
+CLINEA 0000H 0001H 03DFH 0004H 000CH
+	mov	er0,	#0 
+	st	er0,	0f932h
+
+;;      PERUN = 0;        // OFF to start
+CLINEA 0000H 0001H 03E8H 0007H 0027H
+	rb	0f937h.0
+
+;;      PB7DIR = 0;       // PortB Bit0 set to Output Mode... 
+CLINEA 0000H 0001H 03EEH 0007H 003CH
+	rb	0f259h.7
+
+;;      PB7C1  = 1;       // PortB Bit0 set to CMOS Output...
+CLINEA 0000H 0001H 03F0H 0007H 003BH
+	sb	0f25bh.7
+
+;;      PB7C0  = 1;       
+CLINEA 0000H 0001H 03F1H 0007H 0018H
+	sb	0f25ah.7
+
+;;      PB7MD1  = 1;            // PortC Bit0 set to PWM Output (1,0)...
+CLINEA 0000H 0001H 03F3H 0007H 0046H
+	sb	0f25dh.7
+
+;;      PB7MD0  = 0;    
+CLINEA 0000H 0001H 03F4H 0007H 0016H
+	rb	0f25ch.7
+
+;;      PFCS1 = 0;        //00= LS; 01=HS; 10=PLL
+CLINEA 0000H 0001H 03F6H 0007H 002FH
+	rb	0f972h.1
+
+;;      PFCS0 = 1; 
+CLINEA 0000H 0001H 03F7H 0007H 0011H
+	sb	0f972h.0
+
+;;      PWFP = 255;         
+CLINEA 0000H 0001H 03F9H 0007H 001AH
+	mov	r0,	#0ffh
+	st	er0,	0f960h
+
+;;	  PWF0D = 0; 
+CLINEA 0000H 0001H 03FBH 0004H 000EH
+	mov	er0,	#0 
+	st	er0,	0f962h
+
+;;      PFRUN = 0;        // OFF to start
+CLINEA 0000H 0001H 03FCH 0007H 0027H
+	rb	0f973h.0
+
+;;      PA0DIR = 0;       // PortB Bit0 set to Output Mode... 
+CLINEA 0000H 0001H 0400H 0007H 003CH
+	rb	0f251h.0
+
+;;      PA0C1  = 1;       // PortB Bit0 set to CMOS Output...
+CLINEA 0000H 0001H 0402H 0007H 003BH
+	sb	0f253h.0
+
+;;      PA0C0  = 1;       
+CLINEA 0000H 0001H 0403H 0007H 0018H
+	sb	0f252h.0
+
+;;      PA0MD1  = 0;            // PortC Bit0 set to PWM Output (1,0)...
+CLINEA 0000H 0001H 0405H 0007H 0046H
+	rb	0f255h.0
+
+;;      PA0MD0  = 1;    
+CLINEA 0000H 0001H 0406H 0007H 0016H
+	sb	0f254h.0
+
+;;      PCCS1 = 0;        //00= LS; 01=HS; 10=PLL
+CLINEA 0000H 0001H 0408H 0007H 002FH
+	rb	0f916h.1
+
+;;      PCCS0 = 1; 
+CLINEA 0000H 0001H 0409H 0007H 0011H
+	sb	0f916h.0
+
+;;      PWCP = 255;         
+CLINEA 0000H 0001H 040BH 0007H 001AH
+	mov	r0,	#0ffh
+	st	er0,	0f910h
+
+;;	  PWCD = 0; 
+CLINEA 0000H 0001H 040DH 0004H 000DH
+	mov	er0,	#0 
+	st	er0,	0f912h
+
+;;      PCRUN = 0;        // OFF to start
+CLINEA 0000H 0001H 040EH 0007H 0027H
+	rb	0f917h.0
+
+;;      PA1DIR = 0;       // PortB Bit0 set to Output Mode... 
+CLINEA 0000H 0001H 0412H 0007H 003CH
+	rb	0f251h.1
+
+;;      PA1C1  = 1;       // PortB Bit0 set to CMOS Output...
+CLINEA 0000H 0001H 0414H 0007H 003BH
+	sb	0f253h.1
+
+;;      PA1C0  = 1;       
+CLINEA 0000H 0001H 0415H 0007H 0018H
+	sb	0f252h.1
+
+;;      PA1MD1  = 0;            // PortC Bit0 set to PWM Output (1,0)...
+CLINEA 0000H 0001H 0417H 0007H 0046H
+	rb	0f255h.1
+
+;;      PA1MD0  = 1;    
+CLINEA 0000H 0001H 0418H 0007H 0016H
+	sb	0f254h.1
+
+;;      PDCS1 = 0;        //00= LS; 01=HS; 10=PLL
+CLINEA 0000H 0001H 041AH 0007H 002FH
+	rb	0f926h.1
+
+;;      PDCS0 = 1; 
+CLINEA 0000H 0001H 041BH 0007H 0011H
+	sb	0f926h.0
+
+;;      PWDP = 255;         
+CLINEA 0000H 0001H 041DH 0007H 001AH
+	mov	r0,	#0ffh
+	st	er0,	0f920h
+
+;;	  PWDD = 0; 
+CLINEA 0000H 0001H 041FH 0004H 000DH
+	mov	er0,	#0 
+	st	er0,	0f922h
+
+;;      PDRUN = 0;        // OFF to start
+CLINEA 0000H 0001H 0420H 0007H 0027H
+	rb	0f927h.0
+CBLOCKEND 196 2 1059
+
+;;}
+CLINEA 0000H 0001H 0423H 0001H 0001H
+	rt
+CBLOCKEND 196 1 1059
+CFUNCTIONEND 196
+
+
+	rseg $$SET_RGB$main
+CFUNCTION 200
+
+_SET_RGB	:
+CBLOCK 200 1 1061
+
+;;void SET_RGB(rValue,gValue,bValue){   
+CLINEA 0000H 0001H 0425H 0001H 0026H
+	push	fp
+	mov	fp,	sp
+	push	er8
+	mov	er8,	er0
+CBLOCK 200 2 1061
+CARGUMENT 47H 0002H 0028H "rValue" 02H 00H 01H
+CARGUMENT 47H 0002H 0025H "gValue" 02H 00H 01H
+CARGUMENT 43H 0002H 0002H "bValue" 02H 00H 01H
+
+;;			PFRUN = 0;
+CLINEA 0000H 0001H 0426H 0004H 000DH
+	rb	0f973h.0
+
+;;			PCRUN = 0; 
+CLINEA 0000H 0001H 0427H 0004H 000EH
+	rb	0f917h.0
+
+;;			PDRUN = 0;
+CLINEA 0000H 0001H 0428H 0004H 000DH
+	rb	0f927h.0
+
+;;			PWF0D = bValue; 
+CLINEA 0000H 0001H 042AH 0004H 0013H
+	l	er0,	2[fp]
+	st	er0,	0f962h
+
+;;			PWCD =  rValue;
+CLINEA 0000H 0001H 042BH 0004H 0012H
+	st	er8,	0f912h
+
+;;			PWDD  = gValue; 
+CLINEA 0000H 0001H 042CH 0004H 0013H
+	st	er2,	0f922h
+
+;;			PFRUN = 1;    
+CLINEA 0000H 0001H 042EH 0004H 0011H
+	sb	0f973h.0
+
+;;			PCRUN = 1;  
+CLINEA 0000H 0001H 042FH 0004H 000FH
+	sb	0f917h.0
+
+;;			PDRUN = 1;  
+CLINEA 0000H 0001H 0430H 0004H 000FH
+	sb	0f927h.0
+CBLOCKEND 200 2 1073
+
+;;}
+CLINEA 0000H 0001H 0431H 0001H 0001H
+	pop	er8
+	mov	sp,	fp
+	pop	fp
+	rt
+CBLOCKEND 200 1 1073
+CFUNCTIONEND 200
+
+
+	rseg $$Init_KMX61$main
+CFUNCTION 186
+
+_Init_KMX61	:
+CBLOCK 186 1 1086
+
+;;{ 
+CLINEA 0000H 0001H 043EH 0001H 0002H
+	push	lr
+CBLOCK 186 2 1086
+CRET 0000H
+
+;;	RegVal = 0x03u;
+CLINEA 0000H 0001H 0440H 0002H 0010H
+	mov	r0,	#03h
+	st	r0,	NEAR _RegVal
+
+;;	I2C_Write(KMX61_I2C_ADDR, &KMX61_STBY_REG, 1, &RegVal, 1);
+CLINEA 0000H 0001H 0441H 0002H 003BH
+	mov	r0,	#01h
+	push	r0
+	mov	r0,	#BYTE1 OFFSET _RegVal
+	mov	r1,	#BYTE2 OFFSET _RegVal
+	push	er0
+	mov	r0,	#01h
+	push	r0
+	mov	r2,	#BYTE1 OFFSET _KMX61_STBY_REG
+	mov	r3,	#BYTE2 OFFSET _KMX61_STBY_REG
+	mov	r0,	#0eh
+	bl	_I2C_Write
+	add	sp,	#6 
+
+;;	I2C_Write(KMX61_I2C_ADDR, &KMX61_SELF_TEST, 1, &KMX61_SELF_TEST_CFGDAT, 1);
+CLINEA 0000H 0001H 0443H 0002H 004CH
+	mov	r0,	#01h
+	push	r0
+	mov	r0,	#BYTE1 OFFSET _KMX61_SELF_TEST_CFGDAT
+	mov	r1,	#BYTE2 OFFSET _KMX61_SELF_TEST_CFGDAT
+	push	er0
+	mov	r0,	#01h
+	push	r0
+	mov	r2,	#BYTE1 OFFSET _KMX61_SELF_TEST
+	mov	r3,	#BYTE2 OFFSET _KMX61_SELF_TEST
+	mov	r0,	#0eh
+	bl	_I2C_Write
+	add	sp,	#6 
+
+;;	I2C_Write(KMX61_I2C_ADDR, &KMX61_CNTL1, 1, &KMX61_CNTL1_CFGDAT, 1);
+CLINEA 0000H 0001H 0444H 0002H 0044H
+	mov	r0,	#01h
+	push	r0
+	mov	r0,	#BYTE1 OFFSET _KMX61_CNTL1_CFGDAT
+	mov	r1,	#BYTE2 OFFSET _KMX61_CNTL1_CFGDAT
+	push	er0
+	mov	r0,	#01h
+	push	r0
+	mov	r2,	#BYTE1 OFFSET _KMX61_CNTL1
+	mov	r3,	#BYTE2 OFFSET _KMX61_CNTL1
+	mov	r0,	#0eh
+	bl	_I2C_Write
+	add	sp,	#6 
+
+;;	I2C_Write(KMX61_I2C_ADDR, &KMX61_CNTL2, 1, &KMX61_CNTL2_CFGDAT, 1);
+CLINEA 0000H 0001H 0445H 0002H 0044H
+	mov	r0,	#01h
+	push	r0
+	mov	r0,	#BYTE1 OFFSET _KMX61_CNTL2_CFGDAT
+	mov	r1,	#BYTE2 OFFSET _KMX61_CNTL2_CFGDAT
+	push	er0
+	mov	r0,	#01h
+	push	r0
+	mov	r2,	#BYTE1 OFFSET _KMX61_CNTL2
+	mov	r3,	#BYTE2 OFFSET _KMX61_CNTL2
+	mov	r0,	#0eh
+	bl	_I2C_Write
+	add	sp,	#6 
+
+;;	I2C_Write(KMX61_I2C_ADDR, &KMX61_ODCNTL, 1, &KMX61_ODCNTL_CFGDAT, 1);
+CLINEA 0000H 0001H 0446H 0002H 0046H
+	mov	r0,	#01h
+	push	r0
+	mov	r0,	#BYTE1 OFFSET _KMX61_ODCNTL_CFGDAT
+	mov	r1,	#BYTE2 OFFSET _KMX61_ODCNTL_CFGDAT
+	push	er0
+	mov	r0,	#01h
+	push	r0
+	mov	r2,	#BYTE1 OFFSET _KMX61_ODCNTL
+	mov	r3,	#BYTE2 OFFSET _KMX61_ODCNTL
+	mov	r0,	#0eh
+	bl	_I2C_Write
+	add	sp,	#6 
+
+;;	I2C_Write(KMX61_I2C_ADDR, &KMX61_TEMP_EN_CNTL, 1, &KMX61_TEMP_EN_CNTL_CFGDAT, 1);
+CLINEA 0000H 0001H 0447H 0002H 0052H
+	mov	r0,	#01h
+	push	r0
+	mov	r0,	#BYTE1 OFFSET _KMX61_TEMP_EN_CNTL_CFGDAT
+	mov	r1,	#BYTE2 OFFSET _KMX61_TEMP_EN_CNTL_CFGDAT
+	push	er0
+	mov	r0,	#01h
+	push	r0
+	mov	r2,	#BYTE1 OFFSET _KMX61_TEMP_EN_CNTL
+	mov	r3,	#BYTE2 OFFSET _KMX61_TEMP_EN_CNTL
+	mov	r0,	#0eh
+	bl	_I2C_Write
+	add	sp,	#6 
+
+;;	I2C_Write(KMX61_I2C_ADDR, &KMX61_BUF_CTRL1, 1, &KMX61_BUF_CTRL1_CFGDAT, 1);
+CLINEA 0000H 0001H 0448H 0002H 004CH
+	mov	r0,	#01h
+	push	r0
+	mov	r0,	#BYTE1 OFFSET _KMX61_BUF_CTRL1_CFGDAT
+	mov	r1,	#BYTE2 OFFSET _KMX61_BUF_CTRL1_CFGDAT
+	push	er0
+	mov	r0,	#01h
+	push	r0
+	mov	r2,	#BYTE1 OFFSET _KMX61_BUF_CTRL1
+	mov	r3,	#BYTE2 OFFSET _KMX61_BUF_CTRL1
+	mov	r0,	#0eh
+	bl	_I2C_Write
+	add	sp,	#6 
+
+;;	I2C_Write(KMX61_I2C_ADDR, &KMX61_BUF_CTRL2, 1, &KMX61_BUF_CTRL2_CFGDAT, 1);
+CLINEA 0000H 0001H 0449H 0002H 004CH
+	mov	r0,	#01h
+	push	r0
+	mov	r0,	#BYTE1 OFFSET _KMX61_BUF_CTRL2_CFGDAT
+	mov	r1,	#BYTE2 OFFSET _KMX61_BUF_CTRL2_CFGDAT
+	push	er0
+	mov	r0,	#01h
+	push	r0
+	mov	r2,	#BYTE1 OFFSET _KMX61_BUF_CTRL2
+	mov	r3,	#BYTE2 OFFSET _KMX61_BUF_CTRL2
+	mov	r0,	#0eh
+	bl	_I2C_Write
+	add	sp,	#6 
+
+;;	I2C_Write(KMX61_I2C_ADDR, &KMX61_INC1, 1, &KMX61_INC1_CFGDAT, 1);
+CLINEA 0000H 0001H 044CH 0002H 0042H
+	mov	r0,	#01h
+	push	r0
+	mov	r0,	#BYTE1 OFFSET _KMX61_INC1_CFGDAT
+	mov	r1,	#BYTE2 OFFSET _KMX61_INC1_CFGDAT
+	push	er0
+	mov	r0,	#01h
+	push	r0
+	mov	r2,	#BYTE1 OFFSET _KMX61_INC1
+	mov	r3,	#BYTE2 OFFSET _KMX61_INC1
+	mov	r0,	#0eh
+	bl	_I2C_Write
+	add	sp,	#6 
+
+;;	I2C_Write(KMX61_I2C_ADDR, &KMX61_INC3, 1, &KMX61_INC3_CFGDAT, 1);
+CLINEA 0000H 0001H 044DH 0002H 0042H
+	mov	r0,	#01h
+	push	r0
+	mov	r0,	#BYTE1 OFFSET _KMX61_INC3_CFGDAT
+	mov	r1,	#BYTE2 OFFSET _KMX61_INC3_CFGDAT
+	push	er0
+	mov	r0,	#01h
+	push	r0
+	mov	r2,	#BYTE1 OFFSET _KMX61_INC3
+	mov	r3,	#BYTE2 OFFSET _KMX61_INC3
+	mov	r0,	#0eh
+	bl	_I2C_Write
+	add	sp,	#6 
+
+;;	I2C_Write(KMX61_I2C_ADDR, &KMX61_WUFTH, 1, &KMX61_WUFTH_CFGDAT, 1);
+CLINEA 0000H 0001H 044EH 0002H 0044H
+	mov	r0,	#01h
+	push	r0
+	mov	r0,	#BYTE1 OFFSET _KMX61_WUFTH_CFGDAT
+	mov	r1,	#BYTE2 OFFSET _KMX61_WUFTH_CFGDAT
+	push	er0
+	mov	r0,	#01h
+	push	r0
+	mov	r2,	#BYTE1 OFFSET _KMX61_WUFTH
+	mov	r3,	#BYTE2 OFFSET _KMX61_WUFTH
+	mov	r0,	#0eh
+	bl	_I2C_Write
+	add	sp,	#6 
+
+;;	I2C_Write(KMX61_I2C_ADDR, &KMX61_WUFC, 1, &KMX61_WUFC_CFGDAT, 1);
+CLINEA 0000H 0001H 044FH 0002H 0042H
+	mov	r0,	#01h
+	push	r0
+	mov	r0,	#BYTE1 OFFSET _KMX61_WUFC_CFGDAT
+	mov	r1,	#BYTE2 OFFSET _KMX61_WUFC_CFGDAT
+	push	er0
+	mov	r0,	#01h
+	push	r0
+	mov	r2,	#BYTE1 OFFSET _KMX61_WUFC
+	mov	r3,	#BYTE2 OFFSET _KMX61_WUFC
+	mov	r0,	#0eh
+	bl	_I2C_Write
+	add	sp,	#6 
+
+;;	RegVal = 0x02u;
+CLINEA 0000H 0001H 0452H 0002H 0010H
+	mov	r0,	#02h
+	st	r0,	NEAR _RegVal
+
+;;	I2C_Write(KMX61_I2C_ADDR, &KMX61_STBY_REG, 1, &RegVal, 1);
+CLINEA 0000H 0001H 0453H 0002H 003BH
+	mov	r0,	#01h
+	push	r0
+	mov	r0,	#BYTE1 OFFSET _RegVal
+	mov	r1,	#BYTE2 OFFSET _RegVal
+	push	er0
+	mov	r0,	#01h
+	push	r0
+	mov	r2,	#BYTE1 OFFSET _KMX61_STBY_REG
+	mov	r3,	#BYTE2 OFFSET _KMX61_STBY_REG
+	mov	r0,	#0eh
+	bl	_I2C_Write
+	add	sp,	#6 
+CBLOCKEND 186 2 1108
+
+;;}
+CLINEA 0000H 0001H 0454H 0001H 0001H
+	pop	pc
+CBLOCKEND 186 1 1108
+CFUNCTIONEND 186
+
+
+	rseg $$write$main
+CFUNCTION 183
+
+_write	:
+CBLOCK 183 1 1121
+
+;;{
+CLINEA 0000H 0001H 0461H 0001H 0001H
+	push	lr
+	push	fp
+	mov	fp,	sp
+	push	er10
+	mov	er10,	er2
+CBLOCK 183 2 1121
+CRET 0004H
+CARGUMENT 47H 0002H 0000H "handle" 02H 00H 01H
+CARGUMENT 46H 0002H 0029H "buffer" 04H 03H 00H 00H 00H
+CARGUMENT 42H 0002H 0004H "len" 02H 00H 01H
+
+;;	_flgUartFin = 0; 
+CLINEA 0000H 0001H 0462H 0002H 0012H
+	mov	r0,	#00h
+	st	r0,	NEAR __flgUartFin
+
+;;	uart_stop();
+CLINEA 0000H 0001H 0463H 0002H 000DH
+	bl	_uart_stop
+
+;;	uart_startSend(buffer, len, _funcUartFin); 
+CLINEA 0000H 0001H 0464H 0002H 002CH
+	mov	r0,	#BYTE1 OFFSET __funcUartFin
+	mov	r1,	#BYTE2 OFFSET __funcUartFin
+	push	er0
+	l	er2,	4[fp]
+	mov	er0,	er10
+	bl	_uart_startSend
+	add	sp,	#2 
+
+;;	while(_flgUartFin != 1)
+CLINEA 0000H 0000H 0465H 0001H 0001H
+	bal	_$L221
+
+;;	while(_flgUartFin != 1)
+CLINEA 0000H 0000H 0465H 0002H 0018H
+_$L219 :
+CBLOCK 183 3 1126
+
+;;		main_clrWDT();
+CLINEA 0000H 0001H 0467H 0003H 0010H
+	bl	_main_clrWDT
+CBLOCKEND 183 3 1128
+
+;;	while(_flgUartFin != 1)
+CLINEA 0000H 0000H 0465H 0001H 0001H
+_$L221 :
+
+;;	while(_flgUartFin != 1)
+CLINEA 0000H 0000H 0465H 0008H 000CH
+	l	r0,	NEAR __flgUartFin
+	cmp	r0,	#01h
+	bne	_$L219
+
+;;	return len;
+CLINEA 0000H 0001H 0469H 0002H 000CH
+	l	er0,	4[fp]
+CBLOCKEND 183 2 1130
+
+;;}
+CLINEA 0000H 0000H 046AH 0001H 0001H
+	pop	er10
+	mov	sp,	fp
+	pop	fp
+	pop	pc
+CBLOCKEND 183 1 1130
+CFUNCTIONEND 183
+
+
+	rseg $$I2C_Read$main
+CFUNCTION 184
+
+_I2C_Read	:
+CBLOCK 184 1 1145
+
+;;{
+CLINEA 0000H 0001H 0479H 0001H 0001H
+	push	lr
+	push	fp
+	mov	fp,	sp
+	push	xr8
+	mov	er10,	er2
+	mov	r8,	r0
+CBLOCK 184 2 1145
+CRET 0006H
+CARGUMENT 46H 0001H 001CH "slave_address" 02H 00H 00H
+CARGUMENT 46H 0002H 0029H "reg_address" 04H 03H 00H 00H 00H
+CARGUMENT 42H 0001H 0004H "reg_address_size" 02H 00H 00H
+CARGUMENT 42H 0002H 0006H "buffer" 04H 03H 00H 00H 00H
+CARGUMENT 42H 0001H 0008H "size" 02H 00H 00H
+
+;;	_flgI2CFin = 0;
+CLINEA 0000H 0001H 047AH 0002H 0010H
+	mov	r0,	#00h
+	st	r0,	NEAR __flgI2CFin
+
+;;	i2c_stop();	
+CLINEA 0000H 0001H 047BH 0002H 000DH
+	bl	_i2c_stop
+
+;;	i2c_startReceive(slave_address, reg_address, reg_address_size, buffer, size, (cbfI2c)_funcI2CFin);
+CLINEA 0000H 0001H 047CH 0002H 0063H
+	mov	r0,	#BYTE1 OFFSET __funcI2CFin
+	mov	r1,	#BYTE2 OFFSET __funcI2CFin
+	push	er0
+	l	r0,	8[fp]
+	mov	r1,	#00h
+	push	er0
+	l	er0,	6[fp]
+	push	er0
+	l	r0,	4[fp]
+	mov	r1,	#00h
+	push	er0
+	mov	er2,	er10
+	mov	r0,	r8
+	bl	_i2c_startReceive
+	add	sp,	#8 
+
+;;	while(_flgI2CFin != 1)
+CLINEA 0000H 0000H 047DH 0001H 0001H
+	bal	_$L227
+
+;;	while(_flgI2CFin != 1)
+CLINEA 0000H 0000H 047DH 0002H 0017H
+_$L225 :
+CBLOCK 184 3 1150
+
+;;		main_clrWDT();
+CLINEA 0000H 0001H 047FH 0003H 0010H
+	bl	_main_clrWDT
+CBLOCKEND 184 3 1152
+
+;;	while(_flgI2CFin != 1)
+CLINEA 0000H 0000H 047DH 0001H 0001H
+_$L227 :
+
+;;	while(_flgI2CFin != 1)
+CLINEA 0000H 0000H 047DH 0008H 000CH
+	l	r0,	NEAR __flgI2CFin
+	cmp	r0,	#01h
+	bne	_$L225
+CBLOCKEND 184 2 1153
+
+;;}
+CLINEA 0000H 0001H 0481H 0001H 0001H
+	pop	xr8
+	mov	sp,	fp
+	pop	fp
+	pop	pc
+CBLOCKEND 184 1 1153
+CFUNCTIONEND 184
+
+
+	rseg $$I2C_Write$main
+CFUNCTION 185
+
+_I2C_Write	:
+CBLOCK 185 1 1168
+
+;;{
+CLINEA 0000H 0001H 0490H 0001H 0001H
+	push	lr
+	push	fp
+	mov	fp,	sp
+	push	xr8
+	mov	er10,	er2
+	mov	r8,	r0
+CBLOCK 185 2 1168
+CRET 0006H
+CARGUMENT 46H 0001H 001CH "slave_address" 02H 00H 00H
+CARGUMENT 46H 0002H 0029H "reg_address" 04H 03H 00H 00H 00H
+CARGUMENT 42H 0001H 0004H "reg_address_size" 02H 00H 00H
+CARGUMENT 42H 0002H 0006H "buffer" 04H 03H 00H 00H 00H
+CARGUMENT 42H 0001H 0008H "size" 02H 00H 00H
+
+;;	_flgI2CFin = 0;
+CLINEA 0000H 0001H 0491H 0002H 0010H
+	mov	r0,	#00h
+	st	r0,	NEAR __flgI2CFin
+
+;;	i2c_stop();	
+CLINEA 0000H 0001H 0492H 0002H 000DH
+	bl	_i2c_stop
+
+;;	i2c_startSend(slave_address, reg_address, reg_address_size, buffer, size, (cbfI2c)_funcI2CFin);
+CLINEA 0000H 0001H 0493H 0002H 0060H
+	mov	r0,	#BYTE1 OFFSET __funcI2CFin
+	mov	r1,	#BYTE2 OFFSET __funcI2CFin
+	push	er0
+	l	r0,	8[fp]
+	mov	r1,	#00h
+	push	er0
+	l	er0,	6[fp]
+	push	er0
+	l	r0,	4[fp]
+	mov	r1,	#00h
+	push	er0
+	mov	er2,	er10
+	mov	r0,	r8
+	bl	_i2c_startSend
+	add	sp,	#8 
+
+;;	while(_flgI2CFin != 1)
+CLINEA 0000H 0000H 0494H 0001H 0001H
+	bal	_$L233
+
+;;	while(_flgI2CFin != 1)
+CLINEA 0000H 0000H 0494H 0002H 0017H
+_$L231 :
+CBLOCK 185 3 1173
+
+;;		main_clrWDT();
+CLINEA 0000H 0001H 0496H 0003H 0010H
+	bl	_main_clrWDT
+CBLOCKEND 185 3 1175
+
+;;	while(_flgI2CFin != 1)
+CLINEA 0000H 0000H 0494H 0001H 0001H
+_$L233 :
+
+;;	while(_flgI2CFin != 1)
+CLINEA 0000H 0000H 0494H 0008H 000CH
+	l	r0,	NEAR __flgI2CFin
+	cmp	r0,	#01h
+	bne	_$L231
+CBLOCKEND 185 2 1176
+
+;;}
+CLINEA 0000H 0001H 0498H 0001H 0001H
+	pop	xr8
+	mov	sp,	fp
+	pop	fp
+	pop	pc
+CBLOCKEND 185 1 1176
+CFUNCTIONEND 185
+
+
+	rseg $$_funcUartFin$main
+CFUNCTION 187
+
+__funcUartFin	:
+CBLOCK 187 1 1187
+
+;;{
+CLINEA 0000H 0001H 04A3H 0001H 0001H
+	push	lr
+CBLOCK 187 2 1187
+CRET 0000H
+CARGUMENT 46H 0002H 0000H "size" 02H 00H 01H
+CARGUMENT 46H 0001H 0000H "errStat" 02H 00H 00H
+
+;;	uart_continue();					// Function in UART.c: process to continue send and receive...
+CLINEA 0000H 0001H 04A4H 0002H 0054H
+	bl	_uart_continue
+
+;;	_flgUartFin = (unsigned char)FLG_SET;
+CLINEA 0000H 0001H 04A5H 0002H 0026H
+	mov	r0,	#01h
+	st	r0,	NEAR __flgUartFin
+
+;;	main_reqNotHalt();				// uncommented 5/2/2013
+CLINEA 0000H 0001H 04A6H 0002H 002EH
+	bl	_main_reqNotHalt
+CBLOCKEND 187 2 1191
+
+;;}
+CLINEA 0000H 0001H 04A7H 0001H 0001H
+	pop	pc
+CBLOCKEND 187 1 1191
+CFUNCTIONEND 187
+
+
+	rseg $$_funcI2CFin$main
+CFUNCTION 188
+
+__funcI2CFin	:
+CBLOCK 188 1 1202
+
+;;{
+CLINEA 0000H 0001H 04B2H 0001H 0001H
+	push	lr
+CBLOCK 188 2 1202
+CRET 0000H
+CARGUMENT 46H 0002H 0000H "size" 02H 00H 01H
+CARGUMENT 46H 0001H 0000H "errStat" 02H 00H 00H
+
+;;	i2c_continue();					// Function in UART.c: process to continue send and receive...
+CLINEA 0000H 0001H 04B3H 0002H 0053H
+	bl	_i2c_continue
+
+;;	_flgI2CFin = (unsigned char)FLG_SET;
+CLINEA 0000H 0001H 04B4H 0002H 0025H
+	mov	r0,	#01h
+	st	r0,	NEAR __flgI2CFin
+
+;;	main_reqNotHalt();				// uncommented 5/2/2013
+CLINEA 0000H 0001H 04B5H 0002H 002EH
+	bl	_main_reqNotHalt
+CBLOCKEND 188 2 1206
+
+;;}
+CLINEA 0000H 0001H 04B6H 0001H 0001H
+	pop	pc
+CBLOCKEND 188 1 1206
+CFUNCTIONEND 188
+
+
+	rseg $$_intI2c$main
+CFUNCTION 192
+
+__intI2c	:
+CBLOCK 192 1 1216
+
+;;{
+CLINEA 0000H 0001H 04C0H 0001H 0001H
+	push	lr
+CBLOCK 192 2 1216
+CRET 0000H
+
+;;	(void)i2c_continue();
+CLINEA 0000H 0001H 04C1H 0002H 0016H
+	bl	_i2c_continue
+
+;;	main_reqNotHalt();
+CLINEA 0000H 0001H 04C2H 0002H 0013H
+	bl	_main_reqNotHalt
+CBLOCKEND 192 2 1219
+
+;;}
+CLINEA 0000H 0001H 04C3H 0001H 0001H
+	pop	pc
+CBLOCKEND 192 1 1219
+CFUNCTIONEND 192
+
+
+	rseg $$_intPB2$main
+CFUNCTION 193
+
+__intPB2	:
+CBLOCK 193 1 1229
+
+;;{
+CLINEA 0000H 0001H 04CDH 0001H 0001H
+CBLOCK 193 2 1229
+
+;;	_flgPB2Int = 1;
+CLINEA 0000H 0001H 04CEH 0002H 0010H
+	mov	r0,	#01h
+	st	r0,	NEAR __flgPB2Int
+CBLOCKEND 193 2 1232
+
+;;}
+CLINEA 0000H 0001H 04D0H 0001H 0001H
+	rt
+CBLOCKEND 193 1 1232
+CFUNCTIONEND 193
+
+
+	rseg $$checkI2C$main
+CFUNCTION 189
+
+_checkI2C	:
+CBLOCK 189 1 1242
+
+;;{
+CLINEA 0000H 0001H 04DAH 0001H 0001H
+	push	lr
+CBLOCK 189 2 1242
+CRET 0000H
+CLOCAL 47H 0002H 0024H 0002H "ret" 02H 00H 01H
+
+;;	while (ret != 1) {
+CLINEA 0000H 0000H 04DFH 0002H 0013H
+_$L241 :
+CBLOCK 189 3 1247
+
+;;		ret = i2c_continue();
+CLINEA 0000H 0000H 04E0H 0003H 0017H
+	bl	_i2c_continue
+CBLOCK 189 4 1249
+CBLOCKEND 189 4 1251
+CBLOCKEND 189 3 1252
+
+;;	while (ret != 1) {
+CLINEA 0000H 0000H 04DFH 0008H 000CH
+	cmp	r0,	#01h
+	cmpc	r1,	#00h
+	bne	_$L241
+CBLOCKEND 189 2 1253
+
+;;}
+CLINEA 0000H 0001H 04E5H 0001H 0001H
+	pop	pc
+CBLOCKEND 189 1 1253
+CFUNCTIONEND 189
+
+
+	rseg $$main_reqNotHalt$main
+CFUNCTION 190
+
+_main_reqNotHalt	:
+CBLOCK 190 1 1263
+
+;;{
+CLINEA 0000H 0001H 04EFH 0001H 0001H
+CBLOCK 190 2 1263
+
+;;	_reqNotHalt = (unsigned char)FLG_SET;
+CLINEA 0000H 0001H 04F0H 0002H 0026H
+	mov	r0,	#01h
+	st	r0,	NEAR __reqNotHalt
+CBLOCKEND 190 2 1265
+
+;;}
+CLINEA 0000H 0001H 04F1H 0001H 0001H
+	rt
+CBLOCKEND 190 1 1265
+CFUNCTIONEND 190
+
+
+	rseg $$_intUart$main
+CFUNCTION 191
+
+__intUart	:
+CBLOCK 191 1 1275
+
+;;{
+CLINEA 0000H 0001H 04FBH 0001H 0001H
+CBLOCK 191 2 1275
+
+;;		uart_continue(); //in UART.c: process to continue send and receive...
+CLINEA 0000H 0001H 04FCH 0003H 0047H
+	b	_uart_continue
+CBLOCKEND 191 2 1277
+CLINEA 0000H 0001H 04FDH 0001H 0001H
+CBLOCKEND 191 1 1277
+CFUNCTIONEND 191
+
+
+	rseg $$SetOSC$main
+CFUNCTION 179
+
+_SetOSC	:
+CBLOCK 179 1 1282
+
+;;static void SetOSC(void){
+CLINEA 0000H 0001H 0502H 0001H 0019H
+CBLOCK 179 2 1282
+
+;;		SYSC0  = 0;			// Used to select the frequency of the HSCLK => 00=8.192MHz.
+CLINEA 0000H 0001H 0505H 0003H 004CH
+	rb	0f002h.0
+
+;;		SYSC1  = 0;			//...
+CLINEA 0000H 0001H 0506H 0003H 0015H
+	rb	0f002h.1
+
+;;		OSCM1  = 1;			// 10 => Built-in PLL oscillation mode
+CLINEA 0000H 0001H 0507H 0003H 0036H
+	sb	0f002h.3
+
+;;		OSCM0  = 0;			//...
+CLINEA 0000H 0001H 0508H 0003H 0015H
+	rb	0f002h.2
+
+;;		ENOSC  = 1;			// 1=Enable High Speed Oscillator...
+CLINEA 0000H 0001H 050BH 0003H 0034H
+	sb	0f003h.1
+
+;;		SYSCLK = 1;			// Select System Clock: 1=HSCLK; 0=LSCLK 
+CLINEA 0000H 0001H 050CH 0003H 0039H
+	sb	0f003h.0
+
+;;		LPLL   = 1;			// 1=Enables the use of PLL oscillation - ADDED 4/30/2013
+CLINEA 0000H 0001H 050DH 0003H 0049H
+	sb	0f003h.7
+
+;;	__EI();					//INT enable 
+CLINEA 0000H 0001H 050FH 0002H 001AH
+	ei
+CBLOCKEND 179 2 1296
+
+;;}
+CLINEA 0000H 0001H 0510H 0001H 0001H
+	rt
+CBLOCKEND 179 1 1296
+CFUNCTIONEND 179
+
+
+	rseg $$analog_comparator$main
+CFUNCTION 230
+
+_analog_comparator	:
+CBLOCK 230 1 1303
+
+;;void analog_comparator(void){
+CLINEA 0000H 0001H 0517H 0001H 001DH
+CBLOCK 230 2 1303
+
+;;	CMP0EN  = 0x01; 	// Comparator ON...
+CLINEA 0000H 0001H 052DH 0002H 0025H
+	sb	0f950h.0
+
+;;	CMP0E1  = 0x00; 	// No Interupt...
+CLINEA 0000H 0001H 052EH 0002H 0023H
+	rb	0f951h.1
+
+;;	CMP0E0  = 0x00;
+CLINEA 0000H 0001H 052FH 0002H 0010H
+	rb	0f951h.0
+
+;;	CMP0SM1 = 0x00; 	// Detect without Sampling... 
+CLINEA 0000H 0001H 0530H 0002H 0030H
+	rb	0f951h.3
+
+;;	CMP0RFS = 0x01; 	// Differential Input on B5
+CLINEA 0000H 0001H 0531H 0002H 002DH
+	sb	0f951h.4
+
+;;	CMP0EN  = 0x00;
+CLINEA 0000H 0001H 0534H 0002H 0010H
+	rb	0f950h.0
+CBLOCKEND 230 2 1335
+
+;;}
+CLINEA 0000H 0001H 0537H 0001H 0001H
+	rt
+CBLOCKEND 230 1 1335
+CFUNCTIONEND 230
+
+
+	rseg $$PortA_Low$main
+CFUNCTION 180
+
+_PortA_Low	:
+CBLOCK 180 1 1343
+
+;;void PortA_Low(void){
+CLINEA 0000H 0001H 053FH 0001H 0015H
+CBLOCK 180 2 1343
+
+;;	PA0DIR = 0;		// PortA Bit0 set to Output Mode...
+CLINEA 0000H 0001H 0549H 0002H 0031H
+	rb	0f251h.0
+
+;;	PA1DIR = 0;		// PortA Bit1 set to Output Mode...
+CLINEA 0000H 0001H 054AH 0002H 0031H
+	rb	0f251h.1
+
+;;	PA2DIR = 0;		// PortA Bit2 set to Output Mode...
+CLINEA 0000H 0001H 054BH 0002H 0031H
+	rb	0f251h.2
+
+;;	PA0C1  = 1;		// PortA Bit0 set to CMOS Output...
+CLINEA 0000H 0001H 054EH 0002H 0031H
+	sb	0f253h.0
+
+;;	PA0C0  = 1;		
+CLINEA 0000H 0001H 054FH 0002H 000EH
+	sb	0f252h.0
+
+;;	PA1C1  = 1;		// PortA Bit1 set to CMOS Output...
+CLINEA 0000H 0001H 0550H 0002H 0031H
+	sb	0f253h.1
+
+;;	PA1C0  = 1;	
+CLINEA 0000H 0001H 0551H 0002H 000DH
+	sb	0f252h.1
+
+;;	PA2C1  = 1;		// PortA Bit2 set to CMOS Output...
+CLINEA 0000H 0001H 0552H 0002H 0031H
+	sb	0f253h.2
+
+;;	PA2C0  = 1;	
+CLINEA 0000H 0001H 0553H 0002H 000DH
+	sb	0f252h.2
+
+;;	PA0MD1  = 0;	// PortA Bit0 set to General Purpose Output...
+CLINEA 0000H 0001H 0556H 0002H 003CH
+	rb	0f255h.0
+
+;;	PA0MD0  = 0;	
+CLINEA 0000H 0001H 0557H 0002H 000EH
+	rb	0f254h.0
+
+;;	PA1MD1  = 0;	// PortA Bit1 set to General Purpose Output...
+CLINEA 0000H 0001H 0558H 0002H 003CH
+	rb	0f255h.1
+
+;;	PA1MD0  = 0;	
+CLINEA 0000H 0001H 0559H 0002H 000EH
+	rb	0f254h.1
+
+;;	PA2MD1  = 0;	// PortA Bit2 set to General Purpose Output...
+CLINEA 0000H 0001H 055AH 0002H 003CH
+	rb	0f255h.2
+
+;;	PA2MD0  = 0;	
+CLINEA 0000H 0001H 055BH 0002H 000EH
+	rb	0f254h.2
+
+;;	PA0D = 0;		// A.0 Output OFF....
+CLINEA 0000H 0001H 055EH 0002H 0021H
+	rb	0f250h.0
+
+;;	PA1D = 0;		// A.1 Output OFF....
+CLINEA 0000H 0001H 055FH 0002H 0021H
+	rb	0f250h.1
+
+;;	PA2D = 0;		// A.2 Output OFF....
+CLINEA 0000H 0001H 0560H 0002H 0021H
+	rb	0f250h.2
+
+;;	main_clrWDT(); 	// Clear WDT
+CLINEA 0000H 0001H 0562H 0002H 001DH
+	b	_main_clrWDT
+CBLOCKEND 180 2 1380
+CLINEA 0000H 0001H 0564H 0001H 0001H
+CBLOCKEND 180 1 1380
+CFUNCTIONEND 180
+
+
+	rseg $$PortB_Low$main
+CFUNCTION 181
+
+_PortB_Low	:
+CBLOCK 181 1 1386
+
+;;void PortB_Low(void){
+CLINEA 0000H 0001H 056AH 0001H 0015H
+CBLOCK 181 2 1386
+
+;;	PB0DIR = 0;		// PortB Bit0 set to Output Mode...
+CLINEA 0000H 0001H 0574H 0002H 0031H
+	rb	0f259h.0
+
+;;	PB1DIR = 0;		// PortB Bit1 set to Output Mode...
+CLINEA 0000H 0001H 0575H 0002H 0031H
+	rb	0f259h.1
+
+;;	PB2DIR = 0;		// PortB Bit2 set to Output Mode...
+CLINEA 0000H 0001H 0576H 0002H 0031H
+	rb	0f259h.2
+
+;;	PB3DIR = 0;		// PortB Bit3 set to Output Mode...
+CLINEA 0000H 0001H 0577H 0002H 0031H
+	rb	0f259h.3
+
+;;	PB4DIR = 0;		// PortB Bit4 set to Output Mode...
+CLINEA 0000H 0001H 0578H 0002H 0031H
+	rb	0f259h.4
+
+;;	PB5DIR = 0;		// PortB Bit5 set to Output Mode...
+CLINEA 0000H 0001H 0579H 0002H 0031H
+	rb	0f259h.5
+
+;;	PB6DIR = 0;		// PortB Bit6 set to Output Mode...
+CLINEA 0000H 0001H 057AH 0002H 0031H
+	rb	0f259h.6
+
+;;	PB7DIR = 0;		// PortB Bit7 set to Output Mode...
+CLINEA 0000H 0001H 057BH 0002H 0031H
+	rb	0f259h.7
+
+;;	PB0C1  = 1;		// PortB Bit0 set to CMOS Output...
+CLINEA 0000H 0001H 057EH 0002H 0031H
+	sb	0f25bh.0
+
+;;	PB0C0  = 1;		
+CLINEA 0000H 0001H 057FH 0002H 000EH
+	sb	0f25ah.0
+
+;;	PB1C1  = 1;		// PortB Bit1 set to CMOS Output...
+CLINEA 0000H 0001H 0580H 0002H 0031H
+	sb	0f25bh.1
+
+;;	PB1C0  = 1;	
+CLINEA 0000H 0001H 0581H 0002H 000DH
+	sb	0f25ah.1
+
+;;	PB2C1  = 1;		// PortB Bit2 set to CMOS Output...
+CLINEA 0000H 0001H 0582H 0002H 0031H
+	sb	0f25bh.2
+
+;;	PB2C0  = 1;	
+CLINEA 0000H 0001H 0583H 0002H 000DH
+	sb	0f25ah.2
+
+;;	PB3C1  = 1;		// PortB Bit3 set to CMOS Output...
+CLINEA 0000H 0001H 0584H 0002H 0031H
+	sb	0f25bh.3
+
+;;	PB3C0  = 1;		
+CLINEA 0000H 0001H 0585H 0002H 000EH
+	sb	0f25ah.3
+
+;;	PB4C1  = 1;		// PortB Bit4 set to CMOS Output...
+CLINEA 0000H 0001H 0586H 0002H 0031H
+	sb	0f25bh.4
+
+;;	PB4C0  = 1;	
+CLINEA 0000H 0001H 0587H 0002H 000DH
+	sb	0f25ah.4
+
+;;	PB5C1  = 1;		// PortB Bit5 set to CMOS Output...
+CLINEA 0000H 0001H 0588H 0002H 0031H
+	sb	0f25bh.5
+
+;;	PB5C0  = 1;	
+CLINEA 0000H 0001H 0589H 0002H 000DH
+	sb	0f25ah.5
+
+;;	PB6C1  = 1;		// PortB Bit6 set to CMOS Output...
+CLINEA 0000H 0001H 058AH 0002H 0031H
+	sb	0f25bh.6
+
+;;	PB6C0  = 1;	
+CLINEA 0000H 0001H 058BH 0002H 000DH
+	sb	0f25ah.6
+
+;;	PB7C1  = 1;		// PortB Bit7 set to CMOS Output...
+CLINEA 0000H 0001H 058CH 0002H 0031H
+	sb	0f25bh.7
+
+;;	PB7C0  = 1;	
+CLINEA 0000H 0001H 058DH 0002H 000DH
+	sb	0f25ah.7
+
+;;	PB0MD1  = 0;	// PortB Bit0 set to General Purpose Output...
+CLINEA 0000H 0001H 0590H 0002H 003CH
+	rb	0f25dh.0
+
+;;	PB0MD0  = 0;	
+CLINEA 0000H 0001H 0591H 0002H 000EH
+	rb	0f25ch.0
+
+;;	PB1MD1  = 0;	// PortB Bit1 set to General Purpose Output...
+CLINEA 0000H 0001H 0592H 0002H 003CH
+	rb	0f25dh.1
+
+;;	PB1MD0  = 0;	
+CLINEA 0000H 0001H 0593H 0002H 000EH
+	rb	0f25ch.1
+
+;;	PB2MD1  = 0;	// PortB Bit2 set to General Purpose Output...
+CLINEA 0000H 0001H 0594H 0002H 003CH
+	rb	0f25dh.2
+
+;;	PB2MD0  = 0;	
+CLINEA 0000H 0001H 0595H 0002H 000EH
+	rb	0f25ch.2
+
+;;	PB3MD1  = 0;	// PortB Bit3 set to General Purpose Output...
+CLINEA 0000H 0001H 0596H 0002H 003CH
+	rb	0f25dh.3
+
+;;	PB3MD0  = 0;	
+CLINEA 0000H 0001H 0597H 0002H 000EH
+	rb	0f25ch.3
+
+;;	PB4MD1  = 0;	// PortB Bit4 set to General Purpose Output...
+CLINEA 0000H 0001H 0598H 0002H 003CH
+	rb	0f25dh.4
+
+;;	PB4MD0  = 0;	
+CLINEA 0000H 0001H 0599H 0002H 000EH
+	rb	0f25ch.4
+
+;;	PB5MD1  = 0;	// PortB Bit5 set to General Purpose Output...
+CLINEA 0000H 0001H 059AH 0002H 003CH
+	rb	0f25dh.5
+
+;;	PB5MD0  = 0;
+CLINEA 0000H 0001H 059BH 0002H 000DH
+	rb	0f25ch.5
+
+;;	PB6MD1  = 0;	// PortB Bit6 set to General Purpose Output...
+CLINEA 0000H 0001H 059CH 0002H 003CH
+	rb	0f25dh.6
+
+;;	PB6MD0  = 0;	
+CLINEA 0000H 0001H 059DH 0002H 000EH
+	rb	0f25ch.6
+
+;;	PB7MD1  = 0;	// PortB Bit7 set to General Purpose Output...
+CLINEA 0000H 0001H 059EH 0002H 003CH
+	rb	0f25dh.7
+
+;;	PB7MD0  = 0;
+CLINEA 0000H 0001H 059FH 0002H 000DH
+	rb	0f25ch.7
+
+;;	PB0D = 0;		// B.0 Output OFF....
+CLINEA 0000H 0001H 05A2H 0002H 0021H
+	rb	0f258h.0
+
+;;	PB1D = 0;		// B.1 Output OFF....
+CLINEA 0000H 0001H 05A3H 0002H 0021H
+	rb	0f258h.1
+
+;;	PB2D = 0;		// B.2 Output OFF....
+CLINEA 0000H 0001H 05A4H 0002H 0021H
+	rb	0f258h.2
+
+;;	PB3D = 0;		// B.3 Output OFF....
+CLINEA 0000H 0001H 05A5H 0002H 0021H
+	rb	0f258h.3
+
+;;	PB4D = 0;		// B.4 Output OFF....
+CLINEA 0000H 0001H 05A6H 0002H 0021H
+	rb	0f258h.4
+
+;;	PB5D = 0;		// B.5 Output OFF....
+CLINEA 0000H 0001H 05A7H 0002H 0021H
+	rb	0f258h.5
+
+;;	PB6D = 0;		// B.6 Output OFF....
+CLINEA 0000H 0001H 05A8H 0002H 0021H
+	rb	0f258h.6
+
+;;	PB7D = 0;		// B.7 Output OFF....
+CLINEA 0000H 0001H 05A9H 0002H 0021H
+	rb	0f258h.7
+
+;;	main_clrWDT(); 	// Clear WDT
+CLINEA 0000H 0001H 05ABH 0002H 001DH
+	b	_main_clrWDT
+CBLOCKEND 181 2 1453
+CLINEA 0000H 0001H 05ADH 0001H 0001H
+CBLOCKEND 181 1 1453
+CFUNCTIONEND 181
+
+
+	rseg $$PortC_Low$main
+CFUNCTION 182
+
+_PortC_Low	:
+CBLOCK 182 1 1459
+
+;;void PortC_Low(void){
+CLINEA 0000H 0001H 05B3H 0001H 0015H
+CBLOCK 182 2 1459
+
+;;	PC0DIR = 0;		// PortC Bit0 set to Output Mode...
+CLINEA 0000H 0001H 05BDH 0002H 0031H
+	rb	0f261h.0
+
+;;	PC1DIR = 0;		// PortC Bit1 set to Output Mode...
+CLINEA 0000H 0001H 05BEH 0002H 0031H
+	rb	0f261h.1
+
+;;	PC2DIR = 0;		// PortC Bit2 set to Output Mode...
+CLINEA 0000H 0001H 05BFH 0002H 0031H
+	rb	0f261h.2
+
+;;	PC3DIR = 0;		// PortC Bit3 set to Output Mode...
+CLINEA 0000H 0001H 05C0H 0002H 0031H
+	rb	0f261h.3
+
+;;	PC0C1  = 1;		// PortC Bit0 set to CMOS Output...
+CLINEA 0000H 0001H 05C4H 0002H 0031H
+	sb	0f263h.0
+
+;;	PC0C0  = 1;		
+CLINEA 0000H 0001H 05C5H 0002H 000EH
+	sb	0f262h.0
+
+;;	PC1C1  = 1;		// PortC Bit1 set to CMOS Output...
+CLINEA 0000H 0001H 05C6H 0002H 0031H
+	sb	0f263h.1
+
+;;	PC1C0  = 1;	
+CLINEA 0000H 0001H 05C7H 0002H 000DH
+	sb	0f262h.1
+
+;;	PC2C1  = 1;		// PortC Bit2 set to CMOS Output...
+CLINEA 0000H 0001H 05C8H 0002H 0031H
+	sb	0f263h.2
+
+;;	PC2C0  = 1;	
+CLINEA 0000H 0001H 05C9H 0002H 000DH
+	sb	0f262h.2
+
+;;	PC3C1  = 1;		// PortC Bit3 set to CMOS Output...
+CLINEA 0000H 0001H 05CAH 0002H 0031H
+	sb	0f263h.3
+
+;;	PC3C0  = 1;		
+CLINEA 0000H 0001H 05CBH 0002H 000EH
+	sb	0f262h.3
+
+;;	PC0MD1  = 0;	// PortC Bit0 set to General Purpose Output...
+CLINEA 0000H 0001H 05CEH 0002H 003CH
+	rb	0f265h.0
+
+;;	PC0MD0  = 0;	
+CLINEA 0000H 0001H 05CFH 0002H 000EH
+	rb	0f264h.0
+
+;;	PC1MD1  = 0;	// PortC Bit1 set to General Purpose Output...
+CLINEA 0000H 0001H 05D0H 0002H 003CH
+	rb	0f265h.1
+
+;;	PC1MD0  = 0;	
+CLINEA 0000H 0001H 05D1H 0002H 000EH
+	rb	0f264h.1
+
+;;	PC2MD1  = 0;	// PortC Bit2 set to General Purpose Output...
+CLINEA 0000H 0001H 05D2H 0002H 003CH
+	rb	0f265h.2
+
+;;	PC2MD0  = 0;	
+CLINEA 0000H 0001H 05D3H 0002H 000EH
+	rb	0f264h.2
+
+;;	PC3MD1  = 0;	// PortC Bit3 set to General Purpose Output...
+CLINEA 0000H 0001H 05D4H 0002H 003CH
+	rb	0f265h.3
+
+;;	PC3MD0  = 0;	
+CLINEA 0000H 0001H 05D5H 0002H 000EH
+	rb	0f264h.3
+
+;;	PC0D = 0;		// C.0 Output OFF....
+CLINEA 0000H 0001H 05D8H 0002H 0021H
+	rb	0f260h.0
+
+;;	PC1D = 0;		// C.1 Output OFF....
+CLINEA 0000H 0001H 05D9H 0002H 0021H
+	rb	0f260h.1
+
+;;	PC2D = 0;		// C.2 Output OFF....
+CLINEA 0000H 0001H 05DAH 0002H 0021H
+	rb	0f260h.2
+
+;;	PC3D = 0;		// C.3 Output OFF....
+CLINEA 0000H 0001H 05DBH 0002H 0021H
+	rb	0f260h.3
+
+;;	main_clrWDT(); 	// Clear WDT
+CLINEA 0000H 0001H 05DDH 0002H 001DH
+	b	_main_clrWDT
+CBLOCKEND 182 2 1503
+CLINEA 0000H 0001H 05DFH 0001H 0001H
+CBLOCKEND 182 1 1503
+CFUNCTIONEND 182
+
+
+	rseg $$PortA_Digital_Inputs$main
+CFUNCTION 234
+
+_PortA_Digital_Inputs	:
+CBLOCK 234 1 1509
+
+;;void PortA_Digital_Inputs(void){
+CLINEA 0000H 0001H 05E5H 0001H 0020H
+CBLOCK 234 2 1509
+
+;;	PA0DIR = 1;		// PortA Bit0 set to Input Mode...
+CLINEA 0000H 0001H 05EFH 0002H 0030H
+	sb	0f251h.0
+
+;;	PA1DIR = 1;		// PortA Bit1 set to Input Mode...
+CLINEA 0000H 0001H 05F0H 0002H 0030H
+	sb	0f251h.1
+
+;;	PA2DIR = 1;		// PortA Bit2 set to Input Mode...
+CLINEA 0000H 0001H 05F1H 0002H 0030H
+	sb	0f251h.2
+
+;;	PA0C1  = 1;		// PortA Bit0 set to Input with Pull-Up Resistor...
+CLINEA 0000H 0001H 05F5H 0002H 0041H
+	sb	0f253h.0
+
+;;	PA0C0  = 0;		
+CLINEA 0000H 0001H 05F6H 0002H 000EH
+	rb	0f252h.0
+
+;;	PA1C1  = 1;		// PortA Bit1 set to Input with Pull-Up Resistor...
+CLINEA 0000H 0001H 05F7H 0002H 0041H
+	sb	0f253h.1
+
+;;	PA1C0  = 0;	
+CLINEA 0000H 0001H 05F8H 0002H 000DH
+	rb	0f252h.1
+
+;;	PA2C1  = 1;		// PortA Bit2 set to Input with Pull-Up Resistor...
+CLINEA 0000H 0001H 05F9H 0002H 0041H
+	sb	0f253h.2
+
+;;	PA2C0  = 0;	
+CLINEA 0000H 0001H 05FAH 0002H 000DH
+	rb	0f252h.2
+
+;;	PA0MD1  = 0;	// PortA Bit0 set to General Purpose I/O...
+CLINEA 0000H 0001H 05FDH 0002H 0039H
+	rb	0f255h.0
+
+;;	PA0MD0  = 0;	
+CLINEA 0000H 0001H 05FEH 0002H 000EH
+	rb	0f254h.0
+
+;;	PA1MD1  = 0;	// PortA Bit1 set to General Purpose I/O...
+CLINEA 0000H 0001H 05FFH 0002H 0039H
+	rb	0f255h.1
+
+;;	PA1MD0  = 0;	
+CLINEA 0000H 0001H 0600H 0002H 000EH
+	rb	0f254h.1
+
+;;	PA2MD1  = 0;	// PortA Bit2 set to General Purpose I/O...
+CLINEA 0000H 0001H 0601H 0002H 0039H
+	rb	0f255h.2
+
+;;	PA2MD0  = 0;	
+CLINEA 0000H 0001H 0602H 0002H 000EH
+	rb	0f254h.2
+
+;;	main_clrWDT(); 	// Clear WDT
+CLINEA 0000H 0001H 0604H 0002H 001DH
+	b	_main_clrWDT
+CBLOCKEND 234 2 1542
+CLINEA 0000H 0001H 0606H 0001H 0001H
+CBLOCKEND 234 1 1542
+CFUNCTIONEND 234
+
+
+	rseg $$PinB0_PWM$main
+CFUNCTION 235
+
+_PinB0_PWM	:
+CBLOCK 235 1 1550
+
+;;void PinB0_PWM(void){
+CLINEA 0000H 0001H 060EH 0001H 0015H
+CBLOCK 235 2 1550
+
+;;	PB0DIR = 0;		// PortB Bit0 set to Output Mode...
+CLINEA 0000H 0001H 061AH 0002H 0031H
+	rb	0f259h.0
+
+;;	PB0C1  = 1;		// PortB Bit0 set to CMOS Output...
+CLINEA 0000H 0001H 061DH 0002H 0031H
+	sb	0f25bh.0
+
+;;	PB0C0  = 1;		
+CLINEA 0000H 0001H 061EH 0002H 000EH
+	sb	0f25ah.0
+
+;;	PB0MD1  = 0;	// PortB Bit0 set to PWM Output (0,1)...
+CLINEA 0000H 0001H 0621H 0002H 0036H
+	rb	0f25dh.0
+
+;;	PB0MD0  = 1;	
+CLINEA 0000H 0001H 0622H 0002H 000EH
+	sb	0f25ch.0
+
+;;	PCCS1 = 0;	//00= LS; 01=HS; 10=PLL
+CLINEA 0000H 0001H 0626H 0002H 0023H
+	rb	0f916h.1
+
+;;	PCCS0 = 1;
+CLINEA 0000H 0001H 0627H 0002H 000BH
+	sb	0f916h.0
+
+;;	PWCP = 4250;		// Init Period to (1=255kHz; 10=46kHz; 50=10kHz; 200=2.5kH; ; 3185 = 160Hz; 3400=150Hz; 4250=120Hz; 5000=102Hz)
+CLINEA 0000H 0001H 062AH 0002H 007EH
+	mov	r0,	#09ah
+	mov	r1,	#010h
+	st	er0,	0f910h
+
+;;	PWCD =    12;		//12    ~  0.25% duty cycle @ 160Hz
+CLINEA 0000H 0001H 0634H 0002H 0033H
+	mov	er0,	#12
+	st	er0,	0f912h
+
+;;	PCRUN = 0;		// OFF to start
+CLINEA 0000H 0001H 0636H 0002H 001CH
+	rb	0f917h.0
+CBLOCKEND 235 2 1592
+
+;;}
+CLINEA 0000H 0001H 0638H 0001H 0001H
+	rt
+CBLOCKEND 235 1 1592
+CFUNCTIONEND 235
+
+	public _KMX61_WUFC
+	public _KMX61_INC3_CFGDAT
+	public _KMX61_TEMP_EN_CNTL_CFGDAT
+	public _NOPms
+	public _KMX61_INC1_CFGDAT
+	public _KMX61_CNTL1_CFGDAT
+	public _KMX61_CNTL2_CFGDAT
+	public _KMX61_WUFC_CFGDAT
+	public _Manufact_ID
+	public _checkI2C
+	public _DoorOpen
+	public _main_clrWDT
+	public _ALS0_LSB
+	public _ALS0_MSB
+	public _KMX61_BTSC
+	public _KMX61_ODCNTL
+	public _KMX61_COTR
+	public _main_reqNotHalt
+	public _KMX61_STATUS_REG
+	public _KMX61_WUFTH
+	public _KMX61_STBY_REG
+	public _KMX61_INC1
+	public _KMX61_INC2
+	public _KMX61_INC3
+	public _KMX61_ACCEL_YOUT_H
+	public _KMX61_ACCEL_YOUT_L
+	public _GetUART_Command
+	public _KMX61_INS1
+	public _KMX61_INS2
+	public _KMX61_MAG_YOUT_H
+	public _KMX61_MAG_YOUT_L
+	public _KMX61_WUFTH_CFGDAT
+	public _PortA_Digital_Inputs
+	public _BLINK
+	public _KMX61_BUF_THRESH_H
+	public _KMX61_BUF_THRESH_L
+	public _KMX61_BUF_CLEAR
+	public _main
+	public _I2C_Write
+	public _KMX61_ODCNTL_CFGDAT
+	public _OutputPWM
+	public _NOP1000
+	public _Prox_ModeCTR
+	public _KMX61_BTH
+	public _KMX61_TEMP_EN_CNTL
+	public _KMX61_CNTL1
+	public _write
+	public _KMX61_CNTL2
+	public _KMX61_XOUT_HPF_L
+	public _KMX61_XOUT_HPF_H
+	public _ALS1_LSB
+	public _ALS1_MSB
+	public _TimeFlag
+	public _KMX61_INL
+	public _KMX61_ZOUT_HPF_L
+	public _KMX61_ZOUT_HPF_H
+	public _PortC_Low
+	public _GetColorUART_Command
+	public _KMX61_YOUT_HPF_L
+	public _KMX61_YOUT_HPF_H
+	public _blinkRGB
+	public _KMX61_SN_1
+	public _KMX61_SN_2
+	public _KMX61_SN_3
+	public _KMX61_SN_4
+	public _sweepRGB
+	public _KMX61_SELF_TEST_CFGDAT
+	public _Prox_PS_LSB
+	public _SET_RGB
+	public _Prox_PS_MSB
+	public _PortB_Low
+	public _KMX61_I2C_ADDR
+	public _KMX61_BUF_READ
+	public _KMX61_TEMP_OUT_H
+	public _KMX61_TEMP_OUT_L
+	public _KMX61_ACCEL_XOUT_H
+	public _KMX61_ACCEL_ZOUT_H
+	public _KMX61_ACCEL_XOUT_L
+	public _KMX61_ACCEL_ZOUT_L
+	public _KMX61_BUF_CTRL2_CFGDAT
+	public _I2C_Read
+	public _KMX61_BUF_CTRL1_CFGDAT
+	public _KMX61_BUF_CTRL1
+	public _KMX61_BUF_CTRL2
+	public _KMX61_BUF_STATUS_L
+	public _PortA_Low
+	public _KMX61_BUF_STATUS_H
+	public _analog_comparator
+	public _KMX61_MAG_XOUT_H
+	public _KMX61_MAG_ZOUT_H
+	public _KMX61_MAG_XOUT_L
+	public _KMX61_MAG_ZOUT_L
+	public _KMX61_SELF_TEST
+	public _PWM_SET
+	public _KMX61_WHO_AM_I
+	public _Init_KMX61
+	public _PinB0_PWM
+	public _KMX61_BUF_STATUS_REG
+	__flgUartFin comm data 01h #00h
+	_SensorReturn comm data 04h #00h
+	_uniRawSensorOut comm data 06h #00h
+	__flgPB2Int comm data 01h #00h
+	__flgI2CFin comm data 01h #00h
+	_RegVal comm data 01h #00h
+	__reqNotHalt comm data 01h #00h
+	_timer comm data 02h #00h
+	extrn code near : _irq_init
+	extrn code near : _uart_PortSet
+	extrn code near : _i2c_stop
+	extrn code near : _i2c_startReceive
+	extrn code near : _uart_startReceive
+	extrn code near : _uart_init
+	extrn code near : _i2c_continue
+	extrn code near : _irq_di
+	extrn code near : _irq_ei
+	extrn code near : _irq_setHdr
+	extrn code near : _uart_stop
+	extrn code near : _uart_startSend
+	extrn code near : _i2c_startSend
+	extrn code near : _uart_continue
+	extrn code near : _i2c_init
+	extrn code near : _tm_init
+	extrn code : $$start_up
+
+	cseg #00h at 02h
+	dw	$$start_up
+
+	rseg $$NINITTAB
+	db	00h
+	align
+	dw	02h
+	db	01h
+	db	00h
+	db	00h
+	db	020h
+	db	020h
+	db	020h
+	db	020h
+	db	020h
+	db	020h
+	db	020h
+	db	020h
+
+	rseg $$TAB_uartSetParam$main
+__uartSetParam :
+	dw	04b00h
+	dw	00h
+	db	00h
+	db	02h
+	db	00h
+	db	00h
+	db	00h
+	align
+
+	rseg $$TABManufact_ID$main
+_Manufact_ID :
+	db	092h
+
+	rseg $$TABProx_ModeCTR$main
+_Prox_ModeCTR :
+	db	041h
+
+	rseg $$TABProx_PS_LSB$main
+_Prox_PS_LSB :
+	db	044h
+
+	rseg $$TABProx_PS_MSB$main
+_Prox_PS_MSB :
+	db	045h
+
+	rseg $$TABALS0_LSB$main
+_ALS0_LSB :
+	db	046h
+
+	rseg $$TABALS0_MSB$main
+_ALS0_MSB :
+	db	047h
+
+	rseg $$TABALS1_LSB$main
+_ALS1_LSB :
+	db	048h
+
+	rseg $$TABALS1_MSB$main
+_ALS1_MSB :
+	db	049h
+
+	rseg $$TABKMX61_I2C_ADDR$main
+_KMX61_I2C_ADDR :
+	db	0eh
+
+	rseg $$TABKMX61_WHO_AM_I$main
+_KMX61_WHO_AM_I :
+	db	00h
+
+	rseg $$TABKMX61_INS1$main
+_KMX61_INS1 :
+	db	01h
+
+	rseg $$TABKMX61_INS2$main
+_KMX61_INS2 :
+	db	02h
+
+	rseg $$TABKMX61_STATUS_REG$main
+_KMX61_STATUS_REG :
+	db	03h
+
+	rseg $$TABKMX61_ACCEL_XOUT_L$main
+_KMX61_ACCEL_XOUT_L :
+	db	0ah
+
+	rseg $$TABKMX61_ACCEL_XOUT_H$main
+_KMX61_ACCEL_XOUT_H :
+	db	0bh
+
+	rseg $$TABKMX61_ACCEL_YOUT_L$main
+_KMX61_ACCEL_YOUT_L :
+	db	0ch
+
+	rseg $$TABKMX61_ACCEL_YOUT_H$main
+_KMX61_ACCEL_YOUT_H :
+	db	0dh
+
+	rseg $$TABKMX61_ACCEL_ZOUT_L$main
+_KMX61_ACCEL_ZOUT_L :
+	db	0eh
+
+	rseg $$TABKMX61_ACCEL_ZOUT_H$main
+_KMX61_ACCEL_ZOUT_H :
+	db	0fh
+
+	rseg $$TABKMX61_TEMP_OUT_L$main
+_KMX61_TEMP_OUT_L :
+	db	010h
+
+	rseg $$TABKMX61_TEMP_OUT_H$main
+_KMX61_TEMP_OUT_H :
+	db	011h
+
+	rseg $$TABKMX61_MAG_XOUT_L$main
+_KMX61_MAG_XOUT_L :
+	db	012h
+
+	rseg $$TABKMX61_MAG_XOUT_H$main
+_KMX61_MAG_XOUT_H :
+	db	013h
+
+	rseg $$TABKMX61_MAG_YOUT_L$main
+_KMX61_MAG_YOUT_L :
+	db	014h
+
+	rseg $$TABKMX61_MAG_YOUT_H$main
+_KMX61_MAG_YOUT_H :
+	db	015h
+
+	rseg $$TABKMX61_MAG_ZOUT_L$main
+_KMX61_MAG_ZOUT_L :
+	db	016h
+
+	rseg $$TABKMX61_MAG_ZOUT_H$main
+_KMX61_MAG_ZOUT_H :
+	db	017h
+
+	rseg $$TABKMX61_XOUT_HPF_L$main
+_KMX61_XOUT_HPF_L :
+	db	018h
+
+	rseg $$TABKMX61_XOUT_HPF_H$main
+_KMX61_XOUT_HPF_H :
+	db	019h
+
+	rseg $$TABKMX61_YOUT_HPF_L$main
+_KMX61_YOUT_HPF_L :
+	db	01ah
+
+	rseg $$TABKMX61_YOUT_HPF_H$main
+_KMX61_YOUT_HPF_H :
+	db	01bh
+
+	rseg $$TABKMX61_ZOUT_HPF_L$main
+_KMX61_ZOUT_HPF_L :
+	db	01ch
+
+	rseg $$TABKMX61_ZOUT_HPF_H$main
+_KMX61_ZOUT_HPF_H :
+	db	01dh
+
+	rseg $$TABKMX61_SN_1$main
+_KMX61_SN_1 :
+	db	024h
+
+	rseg $$TABKMX61_SN_2$main
+_KMX61_SN_2 :
+	db	025h
+
+	rseg $$TABKMX61_SN_3$main
+_KMX61_SN_3 :
+	db	026h
+
+	rseg $$TABKMX61_SN_4$main
+_KMX61_SN_4 :
+	db	027h
+
+	rseg $$TABKMX61_INL$main
+_KMX61_INL :
+	db	028h
+
+	rseg $$TABKMX61_STBY_REG$main
+_KMX61_STBY_REG :
+	db	029h
+
+	rseg $$TABKMX61_CNTL1$main
+_KMX61_CNTL1 :
+	db	02ah
+
+	rseg $$TABKMX61_CNTL2$main
+_KMX61_CNTL2 :
+	db	02bh
+
+	rseg $$TABKMX61_ODCNTL$main
+_KMX61_ODCNTL :
+	db	02ch
+
+	rseg $$TABKMX61_INC1$main
+_KMX61_INC1 :
+	db	02dh
+
+	rseg $$TABKMX61_INC2$main
+_KMX61_INC2 :
+	db	02eh
+
+	rseg $$TABKMX61_INC3$main
+_KMX61_INC3 :
+	db	02fh
+
+	rseg $$TABKMX61_COTR$main
+_KMX61_COTR :
+	db	03ch
+
+	rseg $$TABKMX61_WUFTH$main
+_KMX61_WUFTH :
+	db	03dh
+
+	rseg $$TABKMX61_WUFC$main
+_KMX61_WUFC :
+	db	03eh
+
+	rseg $$TABKMX61_BTH$main
+_KMX61_BTH :
+	db	03fh
+
+	rseg $$TABKMX61_BTSC$main
+_KMX61_BTSC :
+	db	040h
+
+	rseg $$TABKMX61_TEMP_EN_CNTL$main
+_KMX61_TEMP_EN_CNTL :
+	db	04ch
+
+	rseg $$TABKMX61_SELF_TEST$main
+_KMX61_SELF_TEST :
+	db	060h
+
+	rseg $$TABKMX61_BUF_THRESH_H$main
+_KMX61_BUF_THRESH_H :
+	db	076h
+
+	rseg $$TABKMX61_BUF_THRESH_L$main
+_KMX61_BUF_THRESH_L :
+	db	077h
+
+	rseg $$TABKMX61_BUF_CTRL1$main
+_KMX61_BUF_CTRL1 :
+	db	078h
+
+	rseg $$TABKMX61_BUF_CTRL2$main
+_KMX61_BUF_CTRL2 :
+	db	079h
+
+	rseg $$TABKMX61_BUF_CLEAR$main
+_KMX61_BUF_CLEAR :
+	db	07ah
+
+	rseg $$TABKMX61_BUF_STATUS_REG$main
+_KMX61_BUF_STATUS_REG :
+	db	07bh
+
+	rseg $$TABKMX61_BUF_STATUS_H$main
+_KMX61_BUF_STATUS_H :
+	db	07ch
+
+	rseg $$TABKMX61_BUF_STATUS_L$main
+_KMX61_BUF_STATUS_L :
+	db	07dh
+
+	rseg $$TABKMX61_BUF_READ$main
+_KMX61_BUF_READ :
+	db	07eh
+
+	rseg $$TABKMX61_SELF_TEST_CFGDAT$main
+_KMX61_SELF_TEST_CFGDAT :
+	db	00h
+
+	rseg $$TABKMX61_CNTL1_CFGDAT$main
+_KMX61_CNTL1_CFGDAT :
+	db	053h
+
+	rseg $$TABKMX61_CNTL2_CFGDAT$main
+_KMX61_CNTL2_CFGDAT :
+	db	00h
+
+	rseg $$TABKMX61_ODCNTL_CFGDAT$main
+_KMX61_ODCNTL_CFGDAT :
+	db	00h
+
+	rseg $$TABKMX61_TEMP_EN_CNTL_CFGDAT$main
+_KMX61_TEMP_EN_CNTL_CFGDAT :
+	db	01h
+
+	rseg $$TABKMX61_BUF_CTRL1_CFGDAT$main
+_KMX61_BUF_CTRL1_CFGDAT :
+	db	00h
+
+	rseg $$TABKMX61_BUF_CTRL2_CFGDAT$main
+_KMX61_BUF_CTRL2_CFGDAT :
+	db	00h
+
+	rseg $$TABKMX61_INC1_CFGDAT$main
+_KMX61_INC1_CFGDAT :
+	db	029h
+
+	rseg $$TABKMX61_INC3_CFGDAT$main
+_KMX61_INC3_CFGDAT :
+	db	02h
+
+	rseg $$TABKMX61_WUFTH_CFGDAT$main
+_KMX61_WUFTH_CFGDAT :
+	db	08h
+
+	rseg $$TABKMX61_WUFC_CFGDAT$main
+_KMX61_WUFC_CFGDAT :
+	db	01h
+
+	rseg $$NINITVAR
+_DoorOpen :
+	ds	01h
+	align
+_TimeFlag :
+	ds	02h
+_SensorIntializationFlag :
+	ds	01h
+_LEDFlashFlag :
+	ds	01h
+_LEDChangeFlag :
+	ds	01h
+_str :
+	ds	08h
+
+	rseg $$NVARmain
+_KnotsUnit :
+	ds	01h
+	align
+_bulbMode :
+	ds	02h
+_i :
+	ds	02h
+_j :
+	ds	02h
+_k :
+	ds	02h
+_w :
+	ds	02h
+_x :
+	ds	02h
+_bulbState :
+	ds	01h
+	align
+_y :
+	ds	02h
+_z :
+	ds	02h
+_KnotsSpeed :
+	ds	08h
+_Latitude :
+	ds	08h
+_HomeTolerance :
+	ds	08h
+_Eleveation :
+	ds	02h
+_hexToDecOffset :
+	ds	02h
+_ReceiverState :
+	ds	01h
+_LonDir :
+	ds	01h
+_CheckPointIndex :
+	ds	02h
+_Geoid :
+	ds	08h
+_Date :
+	ds	04h
+_val :
+	ds	0320h
+_LatDest :
+	ds	028h
+_commandVal :
+	ds	03h
+	align
+_Course :
+	ds	08h
+_GSV_Info :
+	ds	018h
+_PDOP :
+	ds	08h
+_isTrueNorth :
+	ds	01h
+	align
+_flag :
+	ds	02h
+_outputVal :
+	ds	04h
+_bulbIntensity :
+	ds	02h
+_fixQuality :
+	ds	02h
+_checkSum :
+	ds	02h
+_VDOP :
+	ds	08h
+_LonDest :
+	ds	028h
+_prevBulbIntensity :
+	ds	08h
+_R_Value :
+	ds	04h
+_B_Value :
+	ds	04h
+_GroundSpeed :
+	ds	08h
+_G_Value :
+	ds	04h
+_bulbEnable :
+	ds	02h
+_SensorPlatformSelection :
+	ds	01h
+_LatLonValid :
+	ds	01h
+_Mode :
+	ds	02h
+_sigDigits :
+	ds	02h
+_LatDir :
+	ds	01h
+	align
+_isSettingMode :
+	ds	02h
+_isNeg :
+	ds	02h
+_MagDegrees :
+	ds	08h
+_MagDir :
+	ds	01h
+	align
+_wordIndex :
+	ds	02h
+_temp :
+	ds	01h
+_speedUnit :
+	ds	01h
+_Azimuth :
+	ds	02h
+_TrueDegrees :
+	ds	08h
+_Longitude :
+	ds	08h
+_MSL :
+	ds	08h
+_MagneticVariation :
+	ds	08h
+_SNR :
+	ds	02h
+_buffer :
+	ds	014h
+_KMHSpeed :
+	ds	01h
+	align
+_GSV_index :
+	ds	02h
+_word :
+	ds	064h
+_UTC :
+	ds	06h
+_PRN_num :
+	ds	02h
+_numSat :
+	ds	02h
+_GSV_numMessage :
+	ds	02h
+_HDOP :
+	ds	08h
+_SV_ID :
+	ds	018h
+_isMagNorth :
+	ds	01h
+
+	rseg $$NINITTAB
+	align
+
+	rseg $$NINITVAR
+	align
+
+	end
